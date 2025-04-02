@@ -4,7 +4,7 @@ excel:
 
 paths:
   input_root: "inputs/"     # 输入根目录
-  output_root: "outputs/"     # 输出根目录
+  output_root: "G://ai素材//数字人//"     # 输出根目录
   date_format: "%Y-%m-%d"     # 日期路径格式
   log: "logs/"     # 日期路径格式
 
