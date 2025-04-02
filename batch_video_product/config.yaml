@@ -1,12 +1,12 @@
 api_config:
-  endpoint: "http://127.0.0.1:7861/"
+  endpoint: "http://127.0.0.1:7860/"
   api_name: "/do_make"
 
 paths:
-  input_video_dir: "./inputs/videos"
-  input_audio_dir: "./inputs/audios"
-  output_dir: "./outputs/processed"
-  log_dir: "./logs"
+  input_video_dir: "inputs/videos/"
+  input_audio_dir: "inputs/audios/"
+  output_dir: "outputs/processed/"
+  log_dir: "logs/"
 
 file_settings:
   allowed_video_types: [".mp4", ".mov"]

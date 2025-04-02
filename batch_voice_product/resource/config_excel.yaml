@@ -1,5 +1,5 @@
 excel:
-  path: "resource/voiceclone.xlsx"    # 输入Excel路径
+  path: "../voiceclone.xlsx"    # 输入Excel路径
   sheet: "voiceclone"     # 结果写入的工作表名
 
 paths:

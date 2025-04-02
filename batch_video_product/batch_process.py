@@ -1,31 +1,33 @@
 # main.py
 import os
-import yaml
-import json
 import shutil
 from datetime import datetime
+
+import yaml
 from gradio_client import Client, handle_file
+
+
+def load_config(config_path):
+    """加载并验证配置文件"""
+    with open(config_path) as f:
+        config = yaml.safe_load(f)
+
+    # 验证必要配置项
+    required_keys = ["api_config", "paths", "file_settings"]
+    for key in required_keys:
+        if key not in config:
+            raise ValueError(f"配置文件中缺少必要字段: {key}")
+
+    return config
 
 
 class VideoGenerator:
     def __init__(self, config_path="config.yaml"):
-        self.config = self.load_config(config_path)
+        self.log_file = None
+        self.config = load_config(config_path)
         self.client = Client(self.config["api_config"]["endpoint"])
         self.setup_directories()
         self.setup_logging()
-
-    def load_config(self, config_path):
-        """加载并验证配置文件"""
-        with open(config_path) as f:
-            config = yaml.safe_load(f)
-
-        # 验证必要配置项
-        required_keys = ["api_config", "paths", "file_settings"]
-        for key in required_keys:
-            if key not in config:
-                raise ValueError(f"配置文件中缺少必要字段: {key}")
-
-        return config
 
     def setup_directories(self):
         """创建必要的目录结构"""
@@ -66,7 +68,7 @@ class VideoGenerator:
         file_size = os.path.getsize(file_path)
         if file_size > max_size:
             raise ValueError(
-                f"文件大小 {file_size/1024/1024:.2f}MB 超过限制 {self.config['file_settings']['max_file_size']}MB"
+                f"文件大小 {file_size / 1024 / 1024:.2f}MB 超过限制 {self.config['file_settings']['max_file_size']}MB"
             )
 
         return True
@@ -95,7 +97,7 @@ class VideoGenerator:
                     if result:
                         return result
         elif isinstance(data, str) and data.endswith(
-            tuple(self.config["file_settings"]["allowed_video_types"])
+                tuple(self.config["file_settings"]["allowed_video_types"])
         ):
             return data
         return None
