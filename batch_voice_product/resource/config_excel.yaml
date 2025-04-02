@@ -1,3 +1,6 @@
+api:
+  endpoint: "http://localhost:9872/"
+
 excel:
   path: "../voiceclone.xlsx"    # 输入Excel路径
   sheet: "voiceclone"     # 结果写入的工作表名
@@ -7,9 +10,6 @@ paths:
   output_root: "G://ai素材//数字人//"     # 输出根目录
   date_format: "%Y-%m-%d"     # 日期路径格式
   log: "logs/"     # 日期路径格式
-
-api:
-  endpoint: "http://localhost:9872/"
 
 logging:
   level: "INFO"

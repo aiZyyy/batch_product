@@ -181,3 +181,4 @@ logs/
 .idea
 
 ~$input.xlsx
+/batch_video_product/output/processed/

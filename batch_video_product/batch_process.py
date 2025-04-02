@@ -117,6 +117,8 @@ class VideoGenerator:
             result = self.client.predict(
                 video=video_data,
                 audio=audio_data,
+                min_resolution=720,
+                if_res=False,
                 api_name=self.config["api_config"]["api_name"],
             )
 
