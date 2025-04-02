@@ -1,10 +1,11 @@
 excel:
-  input_path: "voiceclone.xlsx"    # 输入Excel路径
+  input_path: "resource/voiceclone.xlsx"    # 输入Excel路径
   output_sheet: "voiceclone"     # 结果写入的工作表名
 
 paths:
   output_root: "outputs/"     # 输出根目录
-  date_format: "%Y/%m/%d"     # 日期路径格式
+  date_format: "%Y-%m-%d"     # 日期路径格式
+  log: "logs/"     # 日期路径格式
 
 api:
   endpoint: "http://localhost:9872/"
