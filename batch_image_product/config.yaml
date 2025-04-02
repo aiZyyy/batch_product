@@ -1,0 +1,21 @@
+# 路径配置
+workflow_path: "F://workspace//batch_image_product//workflow.json"
+prompt_file: "prompts/刘思泽-可爱龙.txt"
+filename_prefix: "刘思泽-可爱龙"
+
+# 模型配置
+checkpoint: "flux1-dev-fp8.safetensors"  # 主模型路径
+lora_active_list: "lora_active_list.txt"  # LoRA模型集合
+# lora_name: "FluxMythP0rtr4itStyle.safetensors"  # LoRA模型
+seed_range: [1, 18446744073709551614]  # 随机种子范围
+
+# 图像参数
+width: 720
+height: 1024
+batch_size: 2
+max_filename_length: 6
+
+# 高级设置
+max_retries: 3
+request_timeout: 30
+log_file: "generation_log.csv"

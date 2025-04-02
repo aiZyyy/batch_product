@@ -1,0 +1,35 @@
+from gradio_client import Client, handle_file
+
+# 连接到 Gradio 应用（假设运行在本机 7860 端口）
+client = Client("http://127.0.0.1:7860/")
+
+# 调用 API
+result = client.predict(
+    video={"video": handle_file("视频路径或URL")},  # 替换为你的视频路径/URL
+    audio=handle_file("音频路径或URL"),           # 替换为你的音频路径/URL
+    api_name="/do_make"
+)
+
+# 提取结果
+generated_video = result[0]  # 生成的视频元数据
+processing_time = result[1]  # 处理耗时（字符串）
+
+print("生成的视频信息:", generated_video)
+print("处理时间:", processing_time)
+
+
+from gradio_client import Client, handle_file
+
+# 连接到 Gradio 应用
+client = Client("http://127.0.0.1:7860/")
+
+# 调用 API
+result = client.predict(
+    input_video={"video": handle_file("视频路径或URL")},  # 替换为你的视频路径/URL
+    height=480,  # 目标分辨率高度（如 480 加快处理）
+    api_name="/trans_low"
+)
+
+# 输出处理后的视频元数据
+processed_video = result
+print("处理后的视频信息:", processed_video)

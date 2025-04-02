@@ -1,0 +1,28 @@
+# 路径配置
+paths:
+  audio_inputs: 
+    - "inputs/吴奶奶.MP3"
+    - "inputs/小文声音.MP3"
+    - "inputs/董卿.MP3"
+  text_inputs:
+    - "欢迎使用智能语音系统"
+    - "今日天气晴，气温25摄氏度"
+  output_dir: "outputs/"
+
+# 生成参数
+generation:
+  text_lang: "中文"
+  prompt_lang: "中文"
+  speed_factor: 1.0
+  top_k: 5
+  sample_steps: 32
+
+# 模型设置
+api:
+  endpoint: "http://localhost:9872/"
+
+# 日志配置
+logging:
+  log_dir: "logs/"
+  max_size: 10485760  # 10MB
+  backup_count: 5

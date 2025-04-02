@@ -1,0 +1,23 @@
+excel:
+  input_path: "voiceclone.xlsx"    # 输入Excel路径
+  output_sheet: "voiceclone"     # 结果写入的工作表名
+
+paths:
+  output_root: "outputs/"     # 输出根目录
+  date_format: "%Y/%m/%d"     # 日期路径格式
+
+api:
+  endpoint: "http://localhost:9872/"
+
+logging:
+  level: "INFO"
+  max_bytes: 10485760         # 10MB
+  backup_count: 5
+
+# 生成参数
+generation:
+  text_lang: "中文"
+  prompt_lang: "中文"
+  speed_factor: 1.0
+  top_k: 5
+  sample_steps: 32
