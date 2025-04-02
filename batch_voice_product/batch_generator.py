@@ -6,7 +6,7 @@ from pathlib import Path
 from gradio_client import Client, handle_file
 
 class BatchTTSEngine:
-    def __init__(self, config_path="config.yaml"):
+    def __init__(self, config_path="resource/config.yaml"):
         self.load_config(config_path)
         self.setup_logging()
         self.client = Client(self.config["api"]["endpoint"])

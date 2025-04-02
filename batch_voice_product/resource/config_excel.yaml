@@ -1,8 +1,9 @@
 excel:
-  input_path: "resource/voiceclone.xlsx"    # 输入Excel路径
-  output_sheet: "voiceclone"     # 结果写入的工作表名
+  path: "resource/voiceclone.xlsx"    # 输入Excel路径
+  sheet: "voiceclone"     # 结果写入的工作表名
 
 paths:
+  input_root: "inputs/"     # 输入根目录
   output_root: "outputs/"     # 输出根目录
   date_format: "%Y-%m-%d"     # 日期路径格式
   log: "logs/"     # 日期路径格式
