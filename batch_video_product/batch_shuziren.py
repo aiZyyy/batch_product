@@ -16,19 +16,19 @@ def load_config(config_path):
     # 路径标准化
     config["excel"]["path"] = Path(config["excel"]["path"])
     config["input"]["dir"] = Path(config["input"]["dir"])
-    config["output"]["log_dir"] = Path(config["output"]["log_dir"])
     config["output"]["dir"] = Path(config["output"]["dir"])
+    config["output"]["log_dir"] = Path(config["output"]["log_dir"])
 
     return config
 
 
-def save_output_file(src_path, video_ref, audio_ref, output_dir):
+def save_output_file(src_path, video_ref, output_dir):
+    output_dir.parent.mkdir(parents=True, exist_ok=True)
     """保存输出文件"""
     # 生成唯一文件名
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     video_name = os.path.splitext(os.path.basename(video_ref))[0][:8]
-    audio_name = os.path.splitext(os.path.basename(audio_ref))[0][:6]
-    filename = f"{video_name}_{audio_name}_{timestamp}.mp4"
+    filename = f"{video_name}_{timestamp}.mp4"
     dest_path = os.path.join(output_dir, filename)
 
     shutil.move(src_path, dest_path)
@@ -139,7 +139,6 @@ class BatchVideoProcessor:
             final_path = save_output_file(
                 output_video,
                 params['video'],
-                params['audio'],
                 self.config['output']['dir'] / task[self.config["excel"]["columns"]["people"]]
             )
 
