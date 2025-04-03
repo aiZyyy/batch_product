@@ -92,6 +92,30 @@ class ExcelTTSGenerator:
                 try:
                     # 调用API生成语音
                     result = self.client.predict(
+                        # text="",
+                        # text_lang="中文",
+                        # ref_audio_path=handle_file(
+                        #     'https://github.com/gradio-app/gradio/raw/main/test/test_files/audio_sample.wav'),
+                        # aux_ref_audio_paths=[handle_file(
+                        #     'https://github.com/gradio-app/gradio/raw/main/test/test_files/sample_file.pdf')],
+                        # prompt_text="董卿.MP3",
+                        # prompt_lang="中文",
+                        # top_k=5,
+                        # top_p=1,
+                        # temperature=1,
+                        # text_split_method="凑四句一切",
+                        # batch_size=20,
+                        # speed_factor=1,
+                        # ref_text_free=False,
+                        # split_bucket=True,
+                        # fragment_interval=0.3,
+                        # seed=-1,
+                        # keep_random=True,
+                        # parallel_infer=True,
+                        # repetition_penalty=1.35,
+                        # sample_steps="32",
+                        # super_sampling=False,
+                        # api_name="/inference"
                         aux_ref_audio_paths=[],
                         text=row["合成文本"],
                         text_lang=self.config["generation"]["text_lang"],
