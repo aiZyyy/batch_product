@@ -138,7 +138,8 @@ class BatchVideoProcessor:
             final_path = save_output_file(
                 output_video,
                 params['video'],
-                self.config['output']['dir'] / task[self.config["excel"]["columns"]["people"]]
+                self.config['output']['dir'] / datetime.now().strftime("%Y-%m-%d") / task[
+                    self.config["excel"]["columns"]["people"]]
             )
 
             log_entry.update({
