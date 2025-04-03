@@ -1,10 +1,11 @@
 import os
 import shutil
 from datetime import datetime
+from pathlib import Path
 
 import pandas as pd
 import yaml
-from gradio_client import Client
+from gradio_client import Client, handle_file
 
 
 def load_config(config_path):
@@ -78,8 +79,8 @@ class BatchVideoProcessor:
         """处理单个任务"""
         log_entry = {
             'task_id': task_id,
-            'video': self.config['input']['dir'] + "/" + task[
-                self.config['excel']['columns']['video']],
+            'video': Path(self.config['input']['dir'] + "/" + task[
+                self.config['excel']['columns']['video']]),
             'audio': task[self.config['excel']['columns']['audio']],
             'status': False,
             'output_path': None,

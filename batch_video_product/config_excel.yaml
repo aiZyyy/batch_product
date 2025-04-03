@@ -14,7 +14,7 @@ excel:
     audio: "输出音频"
 
 input:
-  dir: "inputs/"
+  dir: "F://workspace//python//batch_product//batch_video_product//inputs"
 
 output:
   dir: "G://ai素材//数字人//"
