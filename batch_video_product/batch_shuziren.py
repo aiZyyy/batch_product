@@ -23,15 +23,14 @@ def load_config(config_path):
 
 
 def save_output_file(src_path, video_ref, output_dir):
-    output_dir.parent.mkdir(parents=True, exist_ok=True)
     """保存输出文件"""
     # 生成唯一文件名
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    video_name = os.path.splitext(os.path.basename(video_ref))[0][:8]
+    video_name = os.path.splitext(os.path.basename(video_ref))[0][:15]
     filename = f"{video_name}_{timestamp}.mp4"
-    dest_path = os.path.join(output_dir, filename)
-
-    shutil.move(src_path, dest_path)
+    dest_path = output_dir / filename
+    dest_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(src_path, dest_path)
     return dest_path
 
 
