@@ -79,8 +79,8 @@ class ExcelTTSGenerator:
             )
 
             # 添加结果列
-            if "输出路径" not in df.columns:
-                df["输出路径"] = None
+            if "输出音频" not in df.columns:
+                df["输出音频"] = None
             if "日期" not in df.columns:
                 df["日期"] = None
 
@@ -105,14 +105,14 @@ class ExcelTTSGenerator:
                     )
                     # 保存文件并更新记录
                     save_audio(result[0], output_path)
-                    df.at[idx, "输出路径"] = str(output_path)
+                    df.at[idx, "输出音频"] = str(output_path)
                     df.at[idx, "日期"] = process_time.strftime(self.config["paths"]["date_format"])
 
                     logging.info(f"成功处理行 {idx + 1}")
 
                 except Exception as e:
                     logging.error(f"行 {idx + 1} 错误: {str(e)}")
-                    df.at[idx, "输出路径"] = f"错误: {str(e)}"
+                    df.at[idx, "输出音频"] = f"错误: {str(e)}"
 
             # 保存结果
             self._save_excel(df)

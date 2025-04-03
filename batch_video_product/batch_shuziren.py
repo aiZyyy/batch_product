@@ -19,6 +19,7 @@ def load_config(config_path):
 
     return config
 
+
 class BatchVideoProcessor:
     def __init__(self, config_path="config_excel.yaml"):
         self.config = load_config(config_path)
@@ -77,7 +78,8 @@ class BatchVideoProcessor:
         """处理单个任务"""
         log_entry = {
             'task_id': task_id,
-            'video': task[self.config['excel']['columns']['video']],
+            'video': self.config['input']['dir'] + "/" + task[
+                self.config['excel']['columns']['video']],
             'audio': task[self.config['excel']['columns']['audio']],
             'status': False,
             'output_path': None,
@@ -88,7 +90,9 @@ class BatchVideoProcessor:
         try:
             # 准备参数
             params = {
-                "video": str(task[self.config['excel']['columns']['video']]),
+                "video": str(
+                    self.config['input']['dir'] + "/" + task[
+                        self.config['excel']['columns']['video']], ),
                 "audio": str(task[self.config['excel']['columns']['audio']]),
                 "min_resolution": float(task.get(
                     self.config['excel']['columns'].get('min_res', ''),
@@ -114,7 +118,9 @@ class BatchVideoProcessor:
             final_path = self.save_output_file(
                 output_video,
                 params['video'],
-                params['audio']
+                params['audio'],
+                params['output_dir']
+
             )
 
             log_entry.update({
@@ -122,58 +128,59 @@ class BatchVideoProcessor:
                 'output_path': final_path,
                 'time_cost': time_cost
             })
-
         except Exception as e:
             log_entry['error'] = str(e)
-            self.write_error_log(task_id, str(e))
+        self.write_error_log(task_id, str(e))
 
         return log_entry
 
-    def save_output_file(self, src_path, video_ref, audio_ref):
-        """保存输出文件"""
-        # 生成唯一文件名
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        video_name = os.path.splitext(os.path.basename(video_ref))[0][:15]
-        audio_name = os.path.splitext(os.path.basename(audio_ref))[0][:15]
 
-        filename = f"{timestamp}_{video_name}_{audio_name}.mp4"
-        dest_path = os.path.join(self.config['output']['dir'], filename)
+def save_output_file(self, src_path, video_ref, audio_ref, output_dir):
+    """保存输出文件"""
+    # 生成唯一文件名
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    video_name = os.path.splitext(os.path.basename(video_ref))[0][:8]
+    audio_name = os.path.splitext(os.path.basename(audio_ref))[0][:6]
+    filename = f"{video_name}_{audio_name}_{timestamp}.mp4"
+    dest_path = os.path.join(output_dir, filename)
 
-        shutil.move(src_path, dest_path)
-        return dest_path
+    shutil.move(src_path, dest_path)
+    return dest_path
 
-    def save_log_report(self, log_data):
-        """保存日志报告"""
-        # Excel日志
-        df = pd.DataFrame(log_data)
-        report_path = os.path.join(
-            self.config['output']['log_dir'],
-            f"processing_report_{datetime.now().strftime('%Y%m%d')}.xlsx"
-        )
-        df.to_excel(report_path, index=False)
 
-        # 文本日志
-        text_log_path = os.path.join(
-            self.config['output']['log_dir'],
-            f"processing_log_{datetime.now().strftime('%Y%m%d')}.log"
-        )
-        with open(text_log_path, "a") as f:
-            for entry in log_data:
-                log_line = f"[{datetime.now()}] Task {entry['task_id']} - {'SUCCESS' if entry['status'] else 'FAILED'}"
-                if entry['status']:
-                    log_line += f" | Output: {entry['output_path']} | Time: {entry['time_cost']}"
-                else:
-                    log_line += f" | Error: {entry['error']}"
-                f.write(log_line + "\n")
+def save_log_report(self, log_data):
+    """保存日志报告"""
+    # Excel日志
+    df = pd.DataFrame(log_data)
+    report_path = os.path.join(
+        self.config['output']['log_dir'],
+        f"processing_report_{datetime.now().strftime('%Y%m%d')}.xlsx"
+    )
+    df.to_excel(report_path, index=False)
 
-    def write_error_log(self, task_id, error_msg):
-        """单独记录错误日志"""
-        error_log_path = os.path.join(
-            self.config['output']['log_dir'],
-            "error_log.log"
-        )
-        with open(error_log_path, "a") as f:
-            f.write(f"[{datetime.now()}] Task {task_id} - Error: {error_msg}\n")
+    # 文本日志
+    text_log_path = os.path.join(
+        self.config['output']['log_dir'],
+        f"processing_log_{datetime.now().strftime('%Y%m%d')}.log"
+    )
+    with open(text_log_path, "a") as f:
+        for entry in log_data:
+            log_line = f"[{datetime.now()}] Task {entry['task_id']} - {'SUCCESS' if entry['status'] else 'FAILED'}"
+            if entry['status']:
+                log_line += f" | Output: {entry['output_path']} | Time: {entry['time_cost']}"
+            else:
+                log_line += f" | Error: {entry['error']}"
+            f.write(log_line + "\n")
+
+
+def write_error_log(self, task_id, error_msg):
+    """单独记录错误日志"""
+    error_log_path = os.path.join(
+        self.config['output']['log_dir'],
+        "error_log.log"
+    )
+    with open(error_log_path, "a") as f:
+        f.write(f"[{datetime.now()}] Task {task_id} - Error: {error_msg}\n")
 
 
 if __name__ == "__main__":

@@ -13,6 +13,10 @@ excel:
     video: "数字人"
     audio: "输出音频"
 
+input:
+  dir: "inputs/"
+
 output:
-  dir: "./outputs/processed"
+  dir: "G://ai素材//数字人//"
   log_dir: "./outputs/logs"
+
