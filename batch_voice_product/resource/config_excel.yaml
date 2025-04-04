@@ -22,4 +22,6 @@ generation:
   prompt_lang: "中文"
   speed_factor: 1.0
   top_k: 5
-  sample_steps: 32
+  sample_steps: 64
+  seed: 972782474
+  keep_random: False

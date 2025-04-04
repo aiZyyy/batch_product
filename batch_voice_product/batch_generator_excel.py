@@ -90,40 +90,40 @@ class ExcelTTSGenerator:
                 output_path = self.generate_output_path(row, process_time)
                 input_root = self.config["paths"]["input_root"]
                 try:
+                    # 步骤1：处理参考音频
+                    # 自动识别参考音频文本
+                    recognized_text = self.client.predict(
+                        prompt_wav=handle_file(input_root + row["参考音频"]),
+                        api_name="/prompt_wav_recognition"
+                    )
+
                     # 调用API生成语音
                     result = self.client.predict(
-                        # text="",
-                        # text_lang="中文",
-                        # ref_audio_path=handle_file(
-                        #     'https://github.com/gradio-app/gradio/raw/main/test/test_files/audio_sample.wav'),
-                        # aux_ref_audio_paths=[handle_file(
-                        #     'https://github.com/gradio-app/gradio/raw/main/test/test_files/sample_file.pdf')],
-                        # prompt_text="董卿.MP3",
-                        # prompt_lang="中文",
-                        # top_k=5,
-                        # top_p=1,
-                        # temperature=1,
-                        # text_split_method="凑四句一切",
-                        # batch_size=20,
-                        # speed_factor=1,
-                        # ref_text_free=False,
-                        # split_bucket=True,
-                        # fragment_interval=0.3,
-                        # seed=-1,
-                        # keep_random=True,
-                        # parallel_infer=True,
-                        # repetition_penalty=1.35,
-                        # sample_steps="32",
-                        # super_sampling=False,
-                        # api_name="/inference"
-                        aux_ref_audio_paths=[],
                         text=row["合成文本"],
                         text_lang=self.config["generation"]["text_lang"],
                         ref_audio_path=handle_file(input_root + row["参考音频"]),
-                        prompt_text="",  # 自动识别
+                        aux_ref_audio_paths=[],
+                        prompt_text=recognized_text,
                         prompt_lang=self.config["generation"]["prompt_lang"],
-                        speed_factor=self.config["generation"]["speed_factor"],
                         top_k=self.config["generation"]["top_k"],
+                        top_p=1,
+                        temperature=1,
+                        text_split_method="凑四句一切",
+                        batch_size=20,
+                        speed_factor=self.config["generation"]["speed_factor"],
+                        ref_text_free=False,
+                        # 数据分桶(并行推理时会降低一点计算量)
+                        split_bucket=False,
+                        # 分段间隔(秒)
+                        fragment_interval=0.3,
+                        # 种子
+                        seed=self.config["generation"]["seed"],
+                        keep_random=self.config["generation"]["keep_random"],
+                        # 并行推理
+                        parallel_infer=True,
+                        repetition_penalty=1.35,
+                        # 音频超采样(仅对V3生效)
+                        super_sampling=True,
                         sample_steps=self.config["generation"]["sample_steps"],
                         api_name="/inference"
                     )
