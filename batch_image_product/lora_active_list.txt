@@ -1,6 +1,4 @@
 FluxMythP0rtr4itStyle.safetensors
 Hyper_detailed_illustrationFlux.safetensors
-国画写意动物_F.1.safetensors
 麦橘超中国风插画.safetensors
 山水画廊-landscape-v1.safetensors
-fire2.safetensors

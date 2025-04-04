@@ -51,7 +51,7 @@
   },
   "7": {
     "inputs": {
-      "text": "ng_deepnegative_v1_75t, (worst quality:2), (low quality:2), (normal quality:2), lowres, bad anatomy, bad hands, normal quality, bad_feet, bad_snake_body",
+      "text": "ng_deepnegative_v1_75t, (worst quality:2), (low quality:2), (normal quality:2), lowers, bad anatomy, bad hands, normal quality, bad_feet",
       "speak_and_recognation": {
         "__value__": [
           false,

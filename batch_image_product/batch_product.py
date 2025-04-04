@@ -1,10 +1,12 @@
 import json
-import random
 import os
+import random
 import time
-from urllib import request, parse, error
 from datetime import datetime
+from urllib import request, error
+
 import yaml
+
 
 # ----------------------------
 # 配置加载模块
@@ -13,28 +15,28 @@ class AppConfig:
     def __init__(self, config_path):
         with open(config_path, 'r', encoding='utf-8') as f:
             self.raw = yaml.safe_load(f)
-        
+
         # 路径配置
         self.workflow_path = self.raw['workflow_path']
         self.prompt_file = self.raw['prompt_file']
-        
+
         # 模型参数
         self.checkpoint = self.raw['checkpoint']
         # self.lora_name = self.raw['lora_name']
         self.lora_active_list = self.raw['lora_active_list']
         self.seed_range = tuple(self.raw['seed_range'])
-        
+
         # 图像参数
         self.width = self.raw['width']
         self.height = self.raw['height']
         self.batch_size = self.raw['batch_size']
         self.filename_prefix = self.raw['filename_prefix']
         self.max_filename_length = self.raw['max_filename_length']
-        
+
         # 网络设置
         self.max_retries = self.raw['max_retries']
         self.request_timeout = self.raw['request_timeout']
-        
+
 
 # ----------------------------
 # 节点发现模块
@@ -56,12 +58,13 @@ class WorkflowNodes:
                 if node_data['class_type'] == value:
                     self.nodes[key] = node_data
                     break
-        
+
         # 完整性检查
         required_nodes = ['ksampler', 'checkpoint_loader', 'lora_loader']
         missing = [n for n in required_nodes if n not in self.nodes]
         if missing:
             raise ValueError(f"缺少关键节点: {missing}")
+
 
 # ----------------------------
 # 网络请求模块（带重试）
@@ -75,7 +78,7 @@ class ComfyAPI:
     def send_prompt(self, workflow_data):
         data = json.dumps({"prompt": workflow_data}).encode('utf-8')
         req = request.Request(
-            self.endpoint, 
+            self.endpoint,
             data=data,
             headers={'Content-Type': 'application/json'}
         )
@@ -89,8 +92,9 @@ class ComfyAPI:
             except error.URLError as e:
                 print(f"尝试 {attempt}/{self.max_retries} 失败: {str(e)}")
                 time.sleep(2 ** attempt)
-        
+
         return False
+
 
 # ----------------------------
 # 日志模块
@@ -107,6 +111,7 @@ class GenerationLogger:
         entry = f"{datetime.now().isoformat()},{prompt_hash},{seed},{status},{elapsed:.2f}\n"
         with open(self.log_path, 'a', encoding='utf-8') as f:
             f.write(entry)
+
 
 # ----------------------------
 # 主程序
@@ -128,7 +133,7 @@ def main():
     # 加载工作流模板
     with open(config.workflow_path, 'r', encoding='utf-8') as f:
         workflow = json.load(f)
-    
+
     nodes = WorkflowNodes(workflow).nodes
 
     # 配置静态参数
@@ -152,25 +157,26 @@ def main():
                 nodes['prompt_pos']['inputs']['text'] = prompt
                 seed = random.randint(*config.seed_range)
                 nodes['ksampler']['inputs']['seed'] = seed
-                
+
                 # 清理文件名
                 clean_prefix = ''.join(c for c in prompt[:config.max_filename_length] if c.isalnum())
                 nodes['save_image']['inputs']['filename_prefix'] = \
-                    f"{config.filename_prefix}"+"/"+f"{loraName}"+"/"+f"{clean_prefix}"
-                
+                    f"{config.filename_prefix}" + "/" + f"{loraName}" + "/" + f"{clean_prefix}" + str(seed)
+
                 # 发送请求
                 success = api.send_prompt(workflow)
                 status = "SUCCESS" if success else "FAILED"
-                
+
             except Exception as e:
                 print(f"处理提示词时发生错误: {str(e)}")
-            
+
             # 记录日志
             elapsed = time.time() - start_time
             logger.log(prompt, seed, status, elapsed)
-            
+
             # 进度显示
             print(f"[{idx:03d}/{total:03d}] {status} | 耗时: {elapsed:.2f}s | 种子: {seed}")
+
 
 if __name__ == "__main__":
     main()
