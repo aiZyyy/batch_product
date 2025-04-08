@@ -115,7 +115,7 @@ class ExcelTTSGenerator:
                         # 数据分桶(并行推理时会降低一点计算量)
                         split_bucket=False,
                         # 分段间隔(秒)
-                        fragment_interval=0.3,
+                        fragment_interval=0.25,
                         # 种子
                         seed=self.config["generation"]["seed"],
                         keep_random=self.config["generation"]["keep_random"],

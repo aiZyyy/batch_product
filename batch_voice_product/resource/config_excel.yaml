@@ -2,7 +2,7 @@ api:
   endpoint: "http://localhost:9872/"
 
 excel:
-  path: "../voiceclone.xlsx"    # 输入Excel路径
+  path: "../zl.xlsx"    # 输入Excel路径
   sheet: "voiceclone"     # 结果写入的工作表名
 
 paths:
@@ -20,7 +20,7 @@ logging:
 generation:
   text_lang: "中文"
   prompt_lang: "中文"
-  speed_factor: 1.0
+  speed_factor: 1.12
   top_k: 5
   sample_steps: 64
   seed: 972782474

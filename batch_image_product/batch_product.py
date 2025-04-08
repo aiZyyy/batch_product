@@ -18,7 +18,8 @@ class AppConfig:
 
         # 路径配置
         self.workflow_path = self.raw['workflow_path']
-        self.prompt_file = self.raw['prompt_file']
+        self.prompt_file = "prompts/" + self.raw['prompt_file']
+        self.filename_prefix = self.raw['prompt_file']
 
         # 模型参数
         self.checkpoint = self.raw['checkpoint']
@@ -30,7 +31,7 @@ class AppConfig:
         self.width = self.raw['width']
         self.height = self.raw['height']
         self.batch_size = self.raw['batch_size']
-        self.filename_prefix = self.raw['filename_prefix']
+        # self.filename_prefix = self.raw['filename_prefix']
         self.max_filename_length = self.raw['max_filename_length']
 
         # 网络设置
