@@ -1,6 +1,6 @@
 # 路径配置
 workflow_path: "F://workspace//python//batch_product//batch_image_product//workflow.json"
-prompt_file: "刘思泽 提示词.txt"
+prompt_file: "ZL.txt"
 #filename_prefix: "刘思泽"
 
 # 模型配置
