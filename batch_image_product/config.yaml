@@ -1,6 +1,6 @@
 # 路径配置
 workflow_path: "F://workspace//python//batch_product//batch_image_product//workflow.json"
-prompt_file: "ZL.txt"
+prompt_file: "CC.txt"
 #filename_prefix: "刘思泽"
 
 # 模型配置
@@ -10,7 +10,10 @@ lora_active_list: "lora_active_list.txt"  # LoRA模型集合
 seed_range: [ 1, 18446744073709551614 ]  # 随机种子范围
 
 # 图像参数
-width: 728
+#高清
+#width: 1440
+#height: 2560
+width: 720
 height: 1024
 batch_size: 2
 max_filename_length: 15
