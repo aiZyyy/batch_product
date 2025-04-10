@@ -105,11 +105,11 @@ class GenerationLogger:
         self.log_path = log_path
         if not os.path.exists(log_path):
             with open(log_path, 'w', encoding='utf-8') as f:
-                f.write("timestamp,prompt_hash,seed,status,elapsed\n")
+                f.write("lora,filename,prompt,seed,timestamp,status\n")
 
-    def log(self, prompt, seed, status, elapsed):
-        prompt_hash = hash(prompt) % 1000000  # 生成短哈希
-        entry = f"{datetime.now().isoformat()},{prompt_hash},{seed},{status},{elapsed:.2f}\n"
+    def log(self, lora, filename, prompt, seed, status):
+        # prompt_hash = hash(prompt) % 1000000  # 生成短哈希
+        entry = f"{lora},{filename},{prompt},{seed},{datetime.now().strftime("%Y-%m-%d")},{status}\n"
         with open(self.log_path, 'a', encoding='utf-8') as f:
             f.write(entry)
 
@@ -161,8 +161,9 @@ def main():
 
                 # 清理文件名
                 clean_prefix = ''.join(c for c in prompt[:config.max_filename_length] if c.isalnum())
+                file_name = f"{clean_prefix}" + str(seed)
                 nodes['save_image']['inputs']['filename_prefix'] = \
-                    f"{config.filename_prefix}" + "/" + f"{loraName}" + "/" + f"{clean_prefix}" + str(seed)
+                    f"{config.filename_prefix}" + "/" + f"{loraName}" + "/" + file_name
 
                 # 发送请求
                 success = api.send_prompt(workflow)
@@ -173,7 +174,7 @@ def main():
 
             # 记录日志
             elapsed = time.time() - start_time
-            logger.log(prompt, seed, status, elapsed)
+            logger.log(loraName, file_name, prompt, seed, status)
 
             # 进度显示
             print(f"[{idx:03d}/{total:03d}] {status} | 耗时: {elapsed:.2f}s | 种子: {seed}")
