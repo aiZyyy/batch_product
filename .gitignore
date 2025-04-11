@@ -182,4 +182,4 @@ logs/
 
 ~$input.xlsx
 /batch_video_product/output/processed/
-/batch_image_product/generation_log.csv
+/batch_image_product/resource/generation_log.csv
