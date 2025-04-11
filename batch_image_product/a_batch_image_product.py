@@ -12,7 +12,7 @@ import yaml
 # 配置加载模块
 # ----------------------------
 class AppConfig:
-    def __init__(self, config_path="resource/config_excel.yaml"):
+    def __init__(self, config_path="resource/config.yaml"):
         with open(config_path, 'r', encoding='utf-8') as f:
             self.raw = yaml.safe_load(f)
 
@@ -162,8 +162,8 @@ def main():
                 # 清理文件名
                 clean_prefix = ''.join(c for c in prompt[:config.max_filename_length] if c.isalnum())
                 file_name = f"{clean_prefix}" + str(seed)
-                nodes['save_image']['inputs']['filename_prefix'] = \
-                    f"{config.filename_prefix}" + "/" + f"{loraName}" + "/" + file_name
+                nodes['save_image']['inputs']['filename_prefix'] = {datetime.now().strftime(
+                    "%Y-%m-%d")} + "/" + f"{config.filename_prefix}" + "/" + f"{loraName}" + "/" + file_name
 
                 # 发送请求
                 success = api.send_prompt(workflow)
