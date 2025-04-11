@@ -1,5 +1,5 @@
 # 路径配置
-workflow_path: "F://workspace//python//batch_product//batch_image_product//workflow//product_image.json"
+workflow_path: "product_image.json"
 prompt_file: "CC.txt"
 #filename_prefix: "刘思泽"
 
@@ -22,3 +22,4 @@ max_filename_length: 15
 max_retries: 3
 request_timeout: 30
 log_file: "generation_log.csv"
+log_dir: "excel"

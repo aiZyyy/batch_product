@@ -5,6 +5,7 @@ import time
 from datetime import datetime
 from urllib import request, error
 
+import pandas as pd
 import yaml
 
 
@@ -100,27 +101,51 @@ class ComfyAPI:
 # ----------------------------
 # 日志模块
 # ----------------------------
+# class GenerationLogger:
+#     def __init__(self, log_path):
+#         self.log_path = log_path
+#         if not os.path.exists(log_path):
+#             with open(log_path, 'w', encoding='utf-8') as f:
+#                 f.write("lora,filename,prompt,seed,timestamp,status\n")
+#
+#     def log(self, lora, filename, prompt, seed, status):
+#         # prompt_hash = hash(prompt) % 1000000  # 生成短哈希
+#         entry = f"{lora},{filename},{prompt},{seed},{datetime.now().strftime("%Y-%m-%d")},{status}\n"
+#         with open(self.log_path, 'a', encoding='utf-8') as f:
+#             f.write(entry)
 class GenerationLogger:
-    def __init__(self, log_path):
-        self.log_path = log_path
-        if not os.path.exists(log_path):
-            with open(log_path, 'w', encoding='utf-8') as f:
-                f.write("lora,filename,prompt,seed,timestamp,status\n")
+    def __init__(self, log_dir):
+        self.log_dir = log_dir
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)
+        self.log_data = []
 
     def log(self, lora, filename, prompt, seed, status):
-        # prompt_hash = hash(prompt) % 1000000  # 生成短哈希
-        entry = f"{lora},{filename},{prompt},{seed},{datetime.now().strftime("%Y-%m-%d")},{status}\n"
-        with open(self.log_path, 'a', encoding='utf-8') as f:
-            f.write(entry)
+        entry = {
+            'lora': lora,
+            '关键词': prompt,
+            '文件名': filename,
+            '种子': seed,
+            '状态': status,
+            '时间戳': datetime.now().strftime("%Y-%m-%d")
+        }
+        self.log_data.append(entry)
+
+    def save_to_excel(self):
+        date_str = datetime.now().strftime("%Y-%m-%d")
+        log_path = os.path.join(self.log_dir, f"{date_str}.xlsx")
+        df = pd.DataFrame(self.log_data)
+        df.to_excel(log_path, index=False)
+
+    # ----------------------------
 
 
-# ----------------------------
 # 主程序
 # ----------------------------
 def main():
     # 初始化配置
-    config = AppConfig("config.yaml")
-    logger = GenerationLogger(config.raw['log_file'])
+    config = AppConfig("resource/config.yaml")
+    logger = GenerationLogger(config.raw['log_dir'])
     api = ComfyAPI(config)
 
     # 加载提示词
