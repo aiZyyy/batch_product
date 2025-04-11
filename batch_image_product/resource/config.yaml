@@ -16,7 +16,7 @@ seed_range: [ 1, 18446744073709551614 ]  # 随机种子范围
 #height: 2560
 width: 720
 height: 1280
-batch_size: 1
+batch_size: 2
 max_filename_length: 15
 
 # 高级设置

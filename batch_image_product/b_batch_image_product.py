@@ -123,12 +123,13 @@ class GenerationLogger:
             os.makedirs(log_dir)
         self.log_data = []
 
-    def log(self, lora, filename, prompt, seed):
+    def log(self, lora, filename, prompt, seed, url):
         entry = {
             'lora': lora,
             '关键词': prompt,
             '文件名': filename,
             '种子': seed,
+            '图片地址': url,
             '日期': datetime.now().strftime("%Y-%m-%d")
         }
         self.log_data.append(entry)
@@ -192,6 +193,7 @@ def main():
                 nodes['save_image']['inputs']['filename_prefix'] = \
                     f"{config.filename_prefix}" + "/" + f"{loraName}" + "/" + file_name
 
+                url = nodes['save_image']['inputs']['filename_prefix'] + ".png"
                 # 发送请求
                 success = api.send_prompt(workflow)
                 status = "SUCCESS" if success else "FAILED"
@@ -201,7 +203,7 @@ def main():
 
             # 记录日志
             elapsed = time.time() - start_time
-            logger.log(loraName, file_name, prompt, seed)
+            logger.log(loraName, file_name, prompt, seed, url)
 
             # 进度显示
             print(f"[{idx:03d}/{total:03d}] {status} | 耗时: {elapsed:.2f}s | 种子: {seed}")
