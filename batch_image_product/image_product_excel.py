@@ -166,10 +166,33 @@ def main():
         if missing_cols:
             raise ValueError(f"Excel缺少必要列: {missing_cols}")
 
-        # 初始化结果列（如果不存在）
-        for col in ['文件名', '种子', '日期', '错误信息']:
+        # 在读取Excel后添加类型转换处理（主程序部分修改）
+        # 原代码：
+        # for col in ['文件名', '种子', '日期', '错误信息']:
+        #     if col not in df.columns:
+        #         df[col] = ''
+
+        # 修改为：
+        # 初始化或转换列数据类型
+        col_types = {
+            '文件名': str,  # 字符串类型
+            '种子': str,  # 字符串类型
+            '日期': 'datetime64[ns]',  # 日期类型
+            '错误信息': str  # 字符串类型
+        }
+
+        for col, dtype in col_types.items():
             if col not in df.columns:
-                df[col] = ''
+                # 创建新列时直接指定类型
+                df[col] = pd.Series(dtype=dtype)
+            else:
+                # 转换现有列类型
+                try:
+                    df[col] = df[col].astype(dtype)
+                except (TypeError, ValueError):
+                    # 转换失败时用默认值初始化
+                    df[col] = pd.Series(dtype=dtype)
+                    print(f"列 {col} 类型转换失败，已重建")
 
         # 处理每个数据行
         total_rows = len(df)
@@ -195,7 +218,7 @@ def main():
 
                 # 创建lora专属目录
                 lora_dir = os.path.join(date_dir, lora_name)
-                os.makedirs(lora_dir, exist_ok=True)
+                # os.makedirs(lora_dir, exist_ok=True)
 
                 # 配置动态参数
                 nodes['lora_loader']['inputs']['lora_name'] = lora_name
@@ -205,9 +228,23 @@ def main():
 
                 # 发送生成请求
                 if api.send_prompt(workflow):
-                    # 更新数据行
-                    df.at[index, '文件名'] = filename
-                    df.at[index, '种子'] = seed
+                    # 赋值时确保类型安全（修改数据更新部分）
+                    # 原代码：
+                    # df.at[index, '文件名'] = filename
+                    # df.at[index, '种子'] = seed
+
+                    # 修改为：
+                    if pd.api.types.is_string_dtype(df['文件名']):
+                        df.at[index, '文件名'] = filename
+                    else:
+                        df['文件名'] = df['文件名'].astype(str)
+                        df.at[index, '文件名'] = filename
+
+                    if pd.api.types.is_string_dtype(df['种子']):
+                        df.at[index, '种子'] = seed
+                    else:
+                        df['种子'] = df['种子'].astype(str)
+                        df.at[index, '种子'] = seed
                     df.at[index, '日期'] = datetime.now().strftime("%Y-%m-%d")
                     status = "SUCCESS"
 

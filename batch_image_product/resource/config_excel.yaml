@@ -1,7 +1,7 @@
 # 路径配置
 workflow_path: "product_image.json"  # ComfyUI工作流模板路径
 #filename_prefix: "output"       # 输出根目录
-excel_file: "2025-4-11.xlsx"         # 数据文件路径
+excel_file: "input.xlsx"         # 数据文件路径
 
 # 模型配置
 checkpoint: "flux1-dev-fp8.safetensors"  # 主模型
@@ -9,8 +9,8 @@ seed_range: [1, 18446744073709551614]    # 随机种子范围
 
 # 图像参数
 width: 720                 # 图像宽度
-height: 1024               # 图像高度
-batch_size: 4              # 每批数量
+height: 1280               # 图像高度
+batch_size: 1              # 每批数量
 max_filename_length: 30    # 文件名最大长度
 
 # 网络设置
