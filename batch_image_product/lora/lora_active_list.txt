@@ -1,0 +1,3 @@
+Defluxion II.safetensors
+FluxMythP0rtr4itStyle.safetensors
+Hyper_detailed_illustrationFlux.safetensors
