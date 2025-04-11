@@ -32,7 +32,7 @@ class AppConfig:
 
         # 路径配置
         self.workflow_path = Path("workflow/" + self.raw['workflow_path'])  # 工作流模板路径
-        # self.filename_prefix = self.raw['excel_file']  # 输出根目录
+        self.filename_prefix = self.raw['excel_file']  # 输出根目录
         self.excel_file = Path("excel/" + self.raw['excel_file'])  # Excel数据文件路径
 
         # 模型参数
@@ -141,7 +141,7 @@ def main():
         api = ComfyAPI(config)
 
         # 创建带日期的输出目录
-        date_dir = os.path.join(config.date_folder, config.excel_file)
+        date_dir = os.path.join(config.date_folder, config.filename_prefix)
         # os.makedirs(date_dir, exist_ok=True)  # 自动创建目录
 
         # 加载工作流模板
