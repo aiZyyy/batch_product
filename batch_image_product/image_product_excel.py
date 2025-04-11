@@ -14,6 +14,7 @@ import random
 import re
 import time
 from datetime import datetime
+from pathlib import Path
 from urllib import request, error
 
 import pandas as pd  # Excel处理
@@ -24,15 +25,15 @@ import yaml
 # 配置加载模块
 # ----------------------------
 class AppConfig:
-    def __init__(self, config_path="resource/config_excel.yaml"):
+    def __init__(self, config_path):
         """初始化并加载配置文件"""
         with open(config_path, 'r', encoding='utf-8') as f:
             self.raw = yaml.safe_load(f)  # 加载YAML配置
 
         # 路径配置
-        self.workflow_path = self.raw['workflow_path']  # 工作流模板路径
+        self.workflow_path = Path("workflow/" + self.raw['workflow_path'])  # 工作流模板路径
         # self.filename_prefix = self.raw['excel_file']  # 输出根目录
-        self.excel_file = self.raw['excel_file']  # Excel数据文件路径
+        self.excel_file = Path("excel/" + self.raw['excel_file'])  # Excel数据文件路径
 
         # 模型参数
         self.checkpoint = self.raw['checkpoint']  # 主模型路径
@@ -136,12 +137,12 @@ def sanitize_filename(text, max_length=15):
 def main():
     try:
         # 初始化配置
-        config = AppConfig("resource/config.yaml")
+        config = AppConfig("resource/config_excel.yaml")
         api = ComfyAPI(config)
 
         # 创建带日期的输出目录
         date_dir = os.path.join(config.date_folder, config.excel_file)
-        os.makedirs(date_dir, exist_ok=True)  # 自动创建目录
+        # os.makedirs(date_dir, exist_ok=True)  # 自动创建目录
 
         # 加载工作流模板
         with open(config.workflow_path, 'r', encoding='utf-8') as f:

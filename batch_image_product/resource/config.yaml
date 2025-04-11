@@ -13,8 +13,8 @@ seed_range: [ 1, 18446744073709551614 ]  # 随机种子范围
 #高清
 #width: 1440
 #height: 2560
-width: 728
-height: 1024
+width: 720
+height: 1280
 batch_size: 4
 max_filename_length: 15
 
