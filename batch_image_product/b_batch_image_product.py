@@ -3,6 +3,7 @@ import os
 import random
 import time
 from datetime import datetime
+from pathlib import Path
 from urllib import request, error
 
 import pandas as pd
@@ -18,14 +19,16 @@ class AppConfig:
             self.raw = yaml.safe_load(f)
 
         # 路径配置
-        self.workflow_path = self.raw['workflow_path']
-        self.prompt_file = "prompts/" + self.raw['prompt_file']
+        self.workflow_path = Path("workflow/" + self.raw['workflow_path'])
+        self.prompt_file = Path("prompts/" + self.raw['prompt_file'])
+        self.prompt_file_str = self.raw['prompt_file']
+        self.lora_active_list = Path("lora/" + self.raw['lora_active_list'])
         self.filename_prefix = self.raw['prompt_file']
 
         # 模型参数
         self.checkpoint = self.raw['checkpoint']
         # self.lora_name = self.raw['lora_name']
-        self.lora_active_list = self.raw['lora_active_list']
+
         self.seed_range = tuple(self.raw['seed_range'])
 
         # 图像参数
@@ -120,19 +123,18 @@ class GenerationLogger:
             os.makedirs(log_dir)
         self.log_data = []
 
-    def log(self, lora, filename, prompt, seed, status):
+    def log(self, lora, filename, prompt, seed):
         entry = {
             'lora': lora,
             '关键词': prompt,
             '文件名': filename,
             '种子': seed,
-            '状态': status,
-            '时间戳': datetime.now().strftime("%Y-%m-%d")
+            '日期': datetime.now().strftime("%Y-%m-%d")
         }
         self.log_data.append(entry)
 
-    def save_to_excel(self):
-        date_str = datetime.now().strftime("%Y-%m-%d")
+    def save_to_excel(self, prompt_file_str):
+        date_str = datetime.now().strftime("%Y-%m-%d") + "_" + prompt_file_str + "_"
         log_path = os.path.join(self.log_dir, f"{date_str}.xlsx")
         df = pd.DataFrame(self.log_data)
         df.to_excel(log_path, index=False)
@@ -199,10 +201,13 @@ def main():
 
             # 记录日志
             elapsed = time.time() - start_time
-            logger.log(loraName, file_name, prompt, seed, status)
+            logger.log(loraName, file_name, prompt, seed)
 
             # 进度显示
             print(f"[{idx:03d}/{total:03d}] {status} | 耗时: {elapsed:.2f}s | 种子: {seed}")
+
+            # 保存日志到 Excel
+            logger.save_to_excel(config.prompt_file_str)
 
 
 if __name__ == "__main__":
