@@ -2,7 +2,7 @@ api:
   endpoint: "http://localhost:9872/"
 
 excel:
-  path: "../zl.xlsx"    # 输入Excel路径
+  path: "../zl国风.xlsx"    # 输入Excel路径
   sheet: "voiceclone"     # 结果写入的工作表名
 
 paths:
