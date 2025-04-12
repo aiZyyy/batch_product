@@ -1,2 +1,10 @@
+Contemporary_Zodiac_Sculpture.safetensors
+Dark_Ghibli.safetensors
 Defluxion II.safetensors
 FluxMythP0rtr4itStyle.safetensors
+Hyper_detailed_illustrationFlux.safetensors
+ral-dissolve-flux.safetensors
+玻璃破碎.safetensors
+国画写意动物_F.1.safetensors
+麦橘超中国风插画.safetensors
+《麦橘超snake》Majicflus.safetensors

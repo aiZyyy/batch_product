@@ -135,7 +135,7 @@ class GenerationLogger:
         self.log_data.append(entry)
 
     def save_to_excel(self, prompt_file_str):
-        date_str = datetime.now().strftime("%Y-%m-%d") + "_" + prompt_file_str + "_"
+        date_str = datetime.now().strftime("%Y-%m-%d") + "_" + prompt_file_str+"3"
         log_path = os.path.join(self.log_dir, f"{date_str}.xlsx")
         df = pd.DataFrame(self.log_data)
         df.to_excel(log_path, index=False)
@@ -193,7 +193,7 @@ def main():
                 nodes['save_image']['inputs']['filename_prefix'] = \
                     f"{config.filename_prefix}" + "/" + f"{loraName}" + "/" + file_name
 
-                url = nodes['save_image']['inputs']['filename_prefix'] + ".png"
+                url = nodes['save_image']['inputs']['filename_prefix'] + "_00001.png"
                 # 发送请求
                 success = api.send_prompt(workflow)
                 status = "SUCCESS" if success else "FAILED"
