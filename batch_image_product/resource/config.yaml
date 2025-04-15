@@ -1,6 +1,6 @@
 # 路径配置
 workflow_path: "product_image.json"
-prompt_file: "CC~水墨牡丹花.txt"
+prompt_file: "CC~新国风最终版.txt"
 # LoRA模型集合
 lora_active_list: "lora_active_list.txt"
 #filename_prefix: "刘思泽"
@@ -16,7 +16,7 @@ seed_range: [ 1, 18446744073709551614 ]  # 随机种子范围
 #height: 2560
 width: 360
 height: 640
-batch_size: 1
+batch_size: 2
 max_filename_length: 15
 
 # 高级设置

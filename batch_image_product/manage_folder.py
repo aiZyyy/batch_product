@@ -72,5 +72,5 @@ if __name__ == "__main__":
     # 使用示例
     folder_path = r"G:\image\4.11-zl.txt"  # 替换为实际路径
     keyword_file = "F://workspace//python//batch_product//batch_image_product//prompts//ZL.txt"  # 提示词文件路径
-    output_file = "4.11-zl.txt.txt.xlsx"
+    output_file = "4.11-zl.txt.xlsx"
     organize_images_to_excel(folder_path, keyword_file, output_file)
