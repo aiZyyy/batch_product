@@ -135,10 +135,24 @@ class GenerationLogger:
         self.log_data.append(entry)
 
     def save_to_excel(self, prompt_file_str):
-        date_str = datetime.now().strftime("%Y-%m-%d") + "_" + prompt_file_str+"3"
+        date_str = datetime.now().strftime("%Y-%m-%d") + "_" + prompt_file_str
         log_path = os.path.join(self.log_dir, f"{date_str}.xlsx")
-        df = pd.DataFrame(self.log_data)
-        df.to_excel(log_path, index=False)
+
+        # 将当前日志数据转换为DataFrame
+        new_df = pd.DataFrame(self.log_data)
+
+        # 检查文件是否存在
+        if os.path.exists(log_path):
+            # 读取旧数据
+            old_df = pd.read_excel(log_path)
+            # 合并新旧数据
+            combined_df = pd.concat([old_df, new_df], ignore_index=True)
+        else:
+            combined_df = new_df
+
+        # 写入Excel文件（覆盖模式）
+        with pd.ExcelWriter(log_path, engine='openpyxl', mode='w') as writer:
+            combined_df.to_excel(writer, index=False, sheet_name='Logs')
 
     # ----------------------------
 
