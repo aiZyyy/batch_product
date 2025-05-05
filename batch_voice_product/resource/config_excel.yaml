@@ -1,8 +1,8 @@
 api:
-  endpoint: "http://localhost:9872/"
+  endpoint: "http://localhost:7860/"
 
 excel:
-  path: "../zl国风.xlsx"    # 输入Excel路径
+  path: "../voiceclone.xlsx"    # 输入Excel路径
   sheet: "voiceclone"     # 结果写入的工作表名
 
 paths:
@@ -20,8 +20,10 @@ logging:
 generation:
   text_lang: "中文"
   prompt_lang: "中文"
-  speed_factor: 1.12
+  speed_factor: 1
   top_k: 5
   sample_steps: 64
   seed: 972782474
   keep_random: False
+  voice_name: "使用参考音频"  # 新增音色选择配置
+  speed: 1               # 替换原有的speed_factor

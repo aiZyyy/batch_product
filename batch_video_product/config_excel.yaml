@@ -1,13 +1,13 @@
 # config.yaml
 api:
-  endpoint: "http://127.0.0.1:7861/"
+  endpoint: "http://127.0.0.1:7860/"
   name: "/do_make"
   defaults:
     min_resolution: 720
     if_res: False
 
 excel:
-  path: "../2025-4-15.xlsx"
+  path: "../voiceclone.xlsx"
   sheet: "voiceclone"
   columns:
     video: "数字人"

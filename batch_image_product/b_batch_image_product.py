@@ -207,7 +207,7 @@ def main():
                 nodes['save_image']['inputs']['filename_prefix'] = \
                     f"{config.filename_prefix}" + "/" + f"{loraName}" + "/" + file_name
 
-                url = nodes['save_image']['inputs']['filename_prefix'] + "_00001.png"
+                url = nodes['save_image']['inputs']['filename_prefix'] + "_00001_.png"
                 # 发送请求
                 success = api.send_prompt(workflow)
                 status = "SUCCESS" if success else "FAILED"
