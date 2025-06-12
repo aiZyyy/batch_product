@@ -210,7 +210,7 @@
       "method": "lanczos",
       "round_to_multiple": "8",
       "scale_to_side": "longest",
-      "scale_to_length": 1200,
+      "scale_to_length": 1024,
       "background_color": "#000000",
       "image": [
         "303",
