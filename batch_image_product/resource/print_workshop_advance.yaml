@@ -1,0 +1,36 @@
+# 所属人
+people: "李进"
+# 图片文件夹路径
+image_folder: "G:/6月12号"
+batch_size: 2              # 每批数量
+
+# 路径配置
+workflow_path: "print_workshop_advance.json"
+
+# 网络设置
+max_retries: 3             # 最大重试次数
+request_timeout: 30        # 请求超时时间(秒)
+
+# LORA模型集合
+lora_names:
+  - "ral-dissolve-flux.safetensors"
+  - "Contemporary_Zodiac_Sculpture.safetensors"
+  - "Dark_Ghibli.safetensors"
+  - "Defluxion II.safetensors"
+  - "FluxMythP0rtr4itStyle.safetensors"
+  - "Hyper_detailed_illustrationFlux.safetensors"
+  - "ral-dissolve-flux.safetensors"
+  - "玻璃破碎.safetensors"
+  - "麦橘超中国风插画.safetensors"
+  - "fire2.safetensors"
+  - "letters-000001.safetensors"
+  - "OB国风绘画V2.safetensors"
+  - "fire2.safetensors"
+  - "传统中国画.safetensors"
+  - "油画风格.safetensors"
+  - "字体设计.safetensors"
+  - "EtherealHuman.safetensors"
+  - "HyperdetailedRealismMJ7Flux.safetensors"
+  - "Paperfold_Style_FLUX-_Make_folded_paper_objects_animals_and_humans.safetensors"
+  - "墙面艺术.safetensors"
+
