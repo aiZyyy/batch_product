@@ -1,11 +1,14 @@
 # 所属人
-people: "李进"
+people: "阿秀"
 # 图片文件夹路径
-image_folder: "G:/6月12号"
+image_folder: "G:/6-12 阿秀"
 batch_size: 2              # 每批数量
 
-# 路径配置
-workflow_path: "print_workshop_advance.json"
+# 高分辨率工作流模板
+workflow_highres: "print_workshop_advance.json"
+
+# 低分辨率工作流模板
+workflow_lowres: "gq_print_workshop_advance.json"
 
 # 网络设置
 max_retries: 3             # 最大重试次数

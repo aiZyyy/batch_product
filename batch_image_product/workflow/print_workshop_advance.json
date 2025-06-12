@@ -17,7 +17,7 @@
   },
   "50": {
     "inputs": {
-      "seed": 391586303305286,
+      "seed": 440830435439158,
       "steps": 20,
       "cfg": 1,
       "sampler_name": "euler",
@@ -131,7 +131,7 @@
   },
   "106": {
     "inputs": {
-      "guidance": 4.6000000000000005,
+      "guidance": 3,
       "conditioning": [
         "103",
         0
@@ -168,7 +168,7 @@
       "num_beams": 3,
       "do_sample": true,
       "output_mask_select": "",
-      "seed": 440514114540285,
+      "seed": 991022172191157,
       "speak_and_recognation": {
         "__value__": [
           false,
@@ -419,7 +419,7 @@
   },
   "288": {
     "inputs": {
-      "paths": "G:\\6-10\\2.png",
+      "paths": "G:\\6-10\\1.png",
       "ignore_missing_images": "false",
       "speak_and_recognation": {
         "__value__": [
