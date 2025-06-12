@@ -1,0 +1,551 @@
+{
+  "8": {
+    "inputs": {
+      "samples": [
+        "50",
+        0
+      ],
+      "vae": [
+        "105",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "50": {
+    "inputs": {
+      "seed": 440830435439158,
+      "steps": 20,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1,
+      "model": [
+        "293",
+        0
+      ],
+      "positive": [
+        "195",
+        0
+      ],
+      "negative": [
+        "104",
+        0
+      ],
+      "latent_image": [
+        "294",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "K采样器"
+    }
+  },
+  "76": {
+    "inputs": {
+      "model": "ZhengPeng7/BiRefNet_HR",
+      "load_local_model": true,
+      "background_color_name": "transparency",
+      "device": "auto",
+      "local_model_path": "D:\\ai\\ComfyUI-aki-v1.6\\ComfyUI\\models\\BiRefNet",
+      "image": [
+        "178",
+        0
+      ]
+    },
+    "class_type": "BiRefNet_Hugo",
+    "_meta": {
+      "title": "🔥BiRefNet"
+    }
+  },
+  "92": {
+    "inputs": {
+      "delimiter": " ",
+      "string1": [
+        "289",
+        0
+      ],
+      "string2": [
+        "300",
+        0
+      ]
+    },
+    "class_type": "JoinStrings",
+    "_meta": {
+      "title": "合并字符串"
+    }
+  },
+  "103": {
+    "inputs": {
+      "text": [
+        "92",
+        0
+      ],
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      },
+      "clip": [
+        "141",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码器"
+    }
+  },
+  "104": {
+    "inputs": {
+      "text": "",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      },
+      "clip": [
+        "141",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码器"
+    }
+  },
+  "105": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "VAE加载器"
+    }
+  },
+  "106": {
+    "inputs": {
+      "guidance": 3,
+      "conditioning": [
+        "103",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "Flux引导"
+    }
+  },
+  "108": {
+    "inputs": {
+      "pixels": [
+        "127",
+        0
+      ],
+      "vae": [
+        "105",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE编码"
+    }
+  },
+  "109": {
+    "inputs": {
+      "text_input": "",
+      "task": "more_detailed_caption",
+      "fill_mask": true,
+      "keep_model_loaded": false,
+      "max_new_tokens": 1024,
+      "num_beams": 3,
+      "do_sample": true,
+      "output_mask_select": "",
+      "seed": 991022172191157,
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      },
+      "image": [
+        "127",
+        0
+      ],
+      "florence2_model": [
+        "110",
+        0
+      ]
+    },
+    "class_type": "Florence2Run",
+    "_meta": {
+      "title": "Florence2 执行"
+    }
+  },
+  "110": {
+    "inputs": {
+      "model": "Florence-2-large",
+      "precision": "fp16",
+      "attention": "sdpa",
+      "convert_to_safetensors": false
+    },
+    "class_type": "Florence2ModelLoader",
+    "_meta": {
+      "title": "Florence2 模型加载器"
+    }
+  },
+  "127": {
+    "inputs": {
+      "aspect_ratio": "original",
+      "proportional_width": 1,
+      "proportional_height": 1,
+      "fit": "letterbox",
+      "method": "lanczos",
+      "round_to_multiple": "8",
+      "scale_to_side": "longest",
+      "scale_to_length": 1200,
+      "background_color": "#000000",
+      "image": [
+        "303",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: ImageScaleByAspectRatio V2",
+    "_meta": {
+      "title": "按宽高比缩放_V2"
+    }
+  },
+  "132": {
+    "inputs": {
+      "filename_prefix": [
+        "217",
+        0
+      ],
+      "images": [
+        "76",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "保存图像"
+    }
+  },
+  "139": {
+    "inputs": {
+      "model_path": "nunchaku",
+      "cache_threshold": 0.12000000000000002,
+      "attention": "nunchaku-fp16",
+      "cpu_offload": "auto",
+      "device_id": 0,
+      "data_type": "bfloat16",
+      "i2f_mode": "enabled"
+    },
+    "class_type": "NunchakuFluxDiTLoader",
+    "_meta": {
+      "title": "Nunchaku FLUX DiT Loader"
+    }
+  },
+  "141": {
+    "inputs": {
+      "model_type": "flux.1",
+      "text_encoder1": "t5xxl_fp8_e4m3fn.safetensors",
+      "text_encoder2": "clip_l.safetensors",
+      "t5_min_length": 512
+    },
+    "class_type": "NunchakuTextEncoderLoaderV2",
+    "_meta": {
+      "title": "Nunchaku Text Encoder Loader V2"
+    }
+  },
+  "178": {
+    "inputs": {
+      "upscale_model": [
+        "180",
+        0
+      ],
+      "image": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "图像通过模型放大"
+    }
+  },
+  "180": {
+    "inputs": {
+      "model_name": "ESRGAN_4x.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "放大模型加载器"
+    }
+  },
+  "189": {
+    "inputs": {
+      "filename_prefix": [
+        "215",
+        0
+      ],
+      "images": [
+        "178",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "保存图像"
+    }
+  },
+  "195": {
+    "inputs": {
+      "downsampling_factor": 1.7000000000000002,
+      "downsampling_function": "nearest",
+      "mode": "center crop (square)",
+      "weight": 0.9000000000000001,
+      "autocrop_margin": 0.1,
+      "conditioning": [
+        "106",
+        0
+      ],
+      "style_model": [
+        "196",
+        0
+      ],
+      "clip_vision": [
+        "197",
+        0
+      ],
+      "image": [
+        "127",
+        0
+      ]
+    },
+    "class_type": "ReduxAdvanced",
+    "_meta": {
+      "title": "ReduxAdvanced"
+    }
+  },
+  "196": {
+    "inputs": {
+      "style_model_name": "flux1-redux-dev.safetensors"
+    },
+    "class_type": "StyleModelLoader",
+    "_meta": {
+      "title": "风格模型加载器"
+    }
+  },
+  "197": {
+    "inputs": {
+      "clip_name": "sigclip_vision_patch14_384.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "CLIP视觉加载器"
+    }
+  },
+  "214": {
+    "inputs": {
+      "String": "原图/base",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      }
+    },
+    "class_type": "String",
+    "_meta": {
+      "title": "字符串"
+    }
+  },
+  "215": {
+    "inputs": {
+      "delimiter": "/",
+      "string1": [
+        "291",
+        0
+      ],
+      "string2": [
+        "214",
+        0
+      ]
+    },
+    "class_type": "JoinStrings",
+    "_meta": {
+      "title": "合并字符串"
+    }
+  },
+  "216": {
+    "inputs": {
+      "String": "透明底/touming",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      }
+    },
+    "class_type": "String",
+    "_meta": {
+      "title": "字符串"
+    }
+  },
+  "217": {
+    "inputs": {
+      "delimiter": "/",
+      "string1": [
+        "291",
+        0
+      ],
+      "string2": [
+        "216",
+        0
+      ]
+    },
+    "class_type": "JoinStrings",
+    "_meta": {
+      "title": "合并字符串"
+    }
+  },
+  "288": {
+    "inputs": {
+      "paths": "G:\\6-10\\1.png",
+      "ignore_missing_images": "false",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      }
+    },
+    "class_type": "JWLoadImagesFromString",
+    "_meta": {
+      "title": "Load Images From String"
+    }
+  },
+  "289": {
+    "inputs": {
+      "String": "Print design, pattern design,",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      }
+    },
+    "class_type": "String",
+    "_meta": {
+      "title": "字符串"
+    }
+  },
+  "291": {
+    "inputs": {
+      "String": "6.11",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      }
+    },
+    "class_type": "String",
+    "_meta": {
+      "title": "字符串"
+    }
+  },
+  "292": {
+    "inputs": {
+      "String": "In the middle, \"happy\" is written in white capital letters, and there is a white heartbeats line, which is a symbol of the game's heartbeat.",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      }
+    },
+    "class_type": "String",
+    "_meta": {
+      "title": "字符串"
+    }
+  },
+  "293": {
+    "inputs": {
+      "lora_name": "ral-dissolve-flux.safetensors",
+      "lora_strength": 1,
+      "model": [
+        "139",
+        0
+      ]
+    },
+    "class_type": "NunchakuFluxLoraLoader",
+    "_meta": {
+      "title": "Nunchaku FLUX.1 LoRA Loader"
+    }
+  },
+  "294": {
+    "inputs": {
+      "batch_size": 2,
+      "latent": [
+        "108",
+        0
+      ]
+    },
+    "class_type": "CR Latent Batch Size",
+    "_meta": {
+      "title": "Latent批次大小"
+    }
+  },
+  "300": {
+    "inputs": {
+      "select": 1,
+      "sel_mode": false,
+      "input1": [
+        "109",
+        2
+      ],
+      "input2": [
+        "292",
+        0
+      ]
+    },
+    "class_type": "ImpactSwitch",
+    "_meta": {
+      "title": "切换"
+    }
+  },
+  "301": {
+    "inputs": {
+      "model_name": "ESRGAN_4x.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "放大模型加载器"
+    }
+  },
+  "303": {
+    "inputs": {
+      "upscale_model": [
+        "301",
+        0
+      ],
+      "image": [
+        "288",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "图像通过模型放大"
+    }
+  }
+}
