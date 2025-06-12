@@ -17,7 +17,7 @@
   },
   "50": {
     "inputs": {
-      "seed": 440830435439158,
+      "seed": 249261771007874,
       "steps": 20,
       "cfg": 1,
       "sampler_name": "euler",
@@ -70,7 +70,7 @@
         0
       ],
       "string2": [
-        "300",
+        "295",
         0
       ]
     },
@@ -82,7 +82,7 @@
   "103": {
     "inputs": {
       "text": [
-        "92",
+        "135",
         0
       ],
       "speak_and_recognation": {
@@ -168,7 +168,7 @@
       "num_beams": 3,
       "do_sample": true,
       "output_mask_select": "",
-      "seed": 991022172191157,
+      "seed": 92607619453269,
       "speak_and_recognation": {
         "__value__": [
           false,
@@ -213,7 +213,7 @@
       "scale_to_length": 1080,
       "background_color": "#000000",
       "image": [
-        "303",
+        "302",
         0
       ]
     },
@@ -236,6 +236,19 @@
     "class_type": "SaveImage",
     "_meta": {
       "title": "保存图像"
+    }
+  },
+  "135": {
+    "inputs": {
+      "text_0": "Print design, pattern design, The image is a graphic design with the words \"Red White + Moo\" written in bold, red, white, and blue letters. The background is a splatter of red, blue, and white, representing the colors of the American flag. On the right side of the image, there is a cartoon cow wearing sunglasses and a blue bow on its head. The cow has a brown and white coat and is looking directly at the viewer. The overall design is patriotic and patriotic.",
+      "text": [
+        "92",
+        0
+      ]
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "展示文本"
     }
   },
   "139": {
@@ -297,7 +310,7 @@
         0
       ],
       "images": [
-        "178",
+        "8",
         0
       ]
     },
@@ -308,7 +321,10 @@
   },
   "195": {
     "inputs": {
-      "downsampling_factor": 1.7000000000000002,
+      "downsampling_factor": [
+        "290",
+        0
+      ],
       "downsampling_function": "nearest",
       "mode": "center crop (square)",
       "weight": 0.9000000000000001,
@@ -419,7 +435,7 @@
   },
   "288": {
     "inputs": {
-      "paths": "G:\\6-10\\1.png",
+      "paths": "G:\\ai素材\\temu印花\\6-10\\微信图片_20250610170830.png",
       "ignore_missing_images": "false",
       "speak_and_recognation": {
         "__value__": [
@@ -448,9 +464,18 @@
       "title": "字符串"
     }
   },
+  "290": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "风格参考系数"
+    }
+  },
   "291": {
     "inputs": {
-      "String": "6.11",
+      "String": "6-11 晚",
       "speak_and_recognation": {
         "__value__": [
           false,
@@ -480,7 +505,7 @@
   },
   "293": {
     "inputs": {
-      "lora_name": "ral-dissolve-flux.safetensors",
+      "lora_name": "HyperdetailedRealismMJ7Flux.safetensors",
       "lora_strength": 1,
       "model": [
         "139",
@@ -494,7 +519,7 @@
   },
   "294": {
     "inputs": {
-      "batch_size": 2,
+      "batch_size": 4,
       "latent": [
         "108",
         0
@@ -505,7 +530,7 @@
       "title": "Latent批次大小"
     }
   },
-  "300": {
+  "295": {
     "inputs": {
       "select": 1,
       "sel_mode": false,
@@ -532,7 +557,7 @@
       "title": "放大模型加载器"
     }
   },
-  "303": {
+  "302": {
     "inputs": {
       "upscale_model": [
         "301",
