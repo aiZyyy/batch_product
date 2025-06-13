@@ -1,7 +1,7 @@
 # 所属人
 people: "李进"
 # 图片文件夹路径
-image_folder: "G:/Desktop/6月13日热销L"
+image_folder: "G:/Desktop"
 batch_size: 4              # 每批数量
 
 # 高分辨率工作流模板

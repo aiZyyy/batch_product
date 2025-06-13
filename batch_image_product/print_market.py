@@ -155,7 +155,7 @@ def process_images(config, api):
             print(f"图片: {img_path.name} | 分辨率: {width}x{height}")
 
             # 根据分辨率选择工作流
-            if width > 500 or height > 500:
+            if width > 1000 or height > 1000:
                 print("  使用高分辨率工作流")
                 workflow = json.loads(json.dumps(workflow_highres))  # 深拷贝
             else:
