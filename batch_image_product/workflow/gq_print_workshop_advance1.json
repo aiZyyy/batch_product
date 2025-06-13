@@ -53,7 +53,7 @@
       "device": "auto",
       "local_model_path": "D:\\ai\\ComfyUI-aki-v1.6\\ComfyUI\\models\\BiRefNet",
       "image": [
-        "8",
+        "178",
         0
       ]
     },
@@ -276,6 +276,31 @@
     "class_type": "NunchakuTextEncoderLoaderV2",
     "_meta": {
       "title": "Nunchaku Text Encoder Loader V2"
+    }
+  },
+  "178": {
+    "inputs": {
+      "upscale_model": [
+        "180",
+        0
+      ],
+      "image": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "图像通过模型放大"
+    }
+  },
+  "180": {
+    "inputs": {
+      "model_name": "ESRGAN_4x.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "放大模型加载器"
     }
   },
   "189": {
