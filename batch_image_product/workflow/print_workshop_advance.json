@@ -131,7 +131,7 @@
   },
   "106": {
     "inputs": {
-      "guidance": 3,
+      "guidance": 3.5,
       "conditioning": [
         "103",
         0
@@ -466,7 +466,7 @@
   },
   "290": {
     "inputs": {
-      "value": 1
+      "value": 3.5
     },
     "class_type": "PrimitiveFloat",
     "_meta": {

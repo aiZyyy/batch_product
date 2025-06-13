@@ -1,8 +1,8 @@
 # 所属人
-people: "阿秀"
+people: "李进"
 # 图片文件夹路径
-image_folder: "G:/6-12 阿秀"
-batch_size: 2              # 每批数量
+image_folder: "G:/Desktop/6月13日热销L"
+batch_size: 4              # 每批数量
 
 # 高分辨率工作流模板
 workflow_highres: "print_workshop_advance.json"
