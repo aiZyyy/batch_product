@@ -17,7 +17,7 @@
   },
   "50": {
     "inputs": {
-      "seed": 249261771007874,
+      "seed": 641549302532034,
       "steps": 25,
       "cfg": 1,
       "sampler_name": "euler",
@@ -70,7 +70,7 @@
         0
       ],
       "string2": [
-        "295",
+        "305",
         0
       ]
     },
@@ -168,7 +168,7 @@
       "num_beams": 3,
       "do_sample": true,
       "output_mask_select": "",
-      "seed": 92607619453269,
+      "seed": 1093738824305137,
       "speak_and_recognation": {
         "__value__": [
           false,
@@ -240,7 +240,7 @@
   },
   "135": {
     "inputs": {
-      "text_0": "Print design, pattern design, The image is a graphic design with the words \"Red White + Moo\" written in bold, red, white, and blue letters. The background is a splatter of red, blue, and white, representing the colors of the American flag. On the right side of the image, there is a cartoon cow wearing sunglasses and a blue bow on its head. The cow has a brown and white coat and is looking directly at the viewer. The overall design is patriotic and patriotic.",
+      "text_0": "Print design, pattern design, The image is a digital illustration of a skull wearing a red baseball cap with a gold dollar sign on it. The skull is holding a stack of money in its right hand and appears to be deep in thought. The background is black, making the skull and the money stand out. The overall style of the illustration is cartoon-like and the colors are bright and vibrant.",
       "text": [
         "92",
         0
@@ -303,7 +303,7 @@
       "downsampling_function": "nearest",
       "mode": "center crop (square)",
       "weight": 0.9000000000000001,
-      "autocrop_margin": 0.1,
+      "autocrop_margin": 0.10000000000000002,
       "conditioning": [
         "106",
         0
@@ -481,7 +481,7 @@
   "293": {
     "inputs": {
       "lora_name": "HyperdetailedRealismMJ7Flux.safetensors",
-      "lora_strength": 1,
+      "lora_strength": 1.0000000000000002,
       "model": [
         "139",
         0
@@ -505,7 +505,7 @@
       "title": "Latent批次大小"
     }
   },
-  "295": {
+  "305": {
     "inputs": {
       "select": 1,
       "sel_mode": false,
