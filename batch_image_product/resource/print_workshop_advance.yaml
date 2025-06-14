@@ -10,6 +10,8 @@ workflow_highres: "print_workshop_advance.json"
 # 低分辨率工作流模板
 workflow_lowres: "gq_print_workshop_advance.json"
 
+seed_range: [1, 18446744073709551614]
+
 # 网络设置
 max_retries: 3             # 最大重试次数
 request_timeout: 30        # 请求超时时间(秒)

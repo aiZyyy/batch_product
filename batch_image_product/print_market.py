@@ -39,6 +39,8 @@ class AppConfig:
         self.people = self.raw['people']
         self.batch_size = self.raw['batch_size']
 
+        self.seed_range = tuple(self.raw['seed_range'])
+
         # 日期目录
         self.date_folder = datetime.now().strftime("%Y-%m-%d")
 
@@ -169,7 +171,10 @@ def process_images(config, api):
             # 随机选择LORA模型
             lora_name = random.choice(config.lora_names)
             sanitized_lora = sanitize_filename(lora_name.split('.')[0])
-
+            seed1 = random.randint(*config.seed_range)
+            workflow["50"]["inputs"]["seed"] = seed1
+            seed2 = random.randint(*config.seed_range)
+            workflow["109"]["inputs"]["seed"] = seed2
             # 更新工作流节点
             # 节点288: 图片路径
             workflow["288"]["inputs"]["paths"] = str(img_path.resolve())
