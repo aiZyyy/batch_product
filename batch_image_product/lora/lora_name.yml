@@ -54,10 +54,27 @@ OB国风绘画V2.safetensors
 工笔画.safetensors
 #Trigger words: p1nktrad1t10nalch1n3s3styl3
 传统中国画.safetensors
-
-
-
-
+#插画工厂
+j_gongbihua_flux_rank2_bf16.safetensors
+#地狱之门 - 漫画风格混搭 | 史莱克曼风格混搭
+Tartarus_-_2.0-000012.safetensors
+#撅嘴美女：Gil Elvgren 海报女郎插画风格
+gilelvgren1_d8a4e9a.safetensors
+#Velvet 的神话奇幻风格 | Flux + Pony + illustrious
+FluxMythR3alism.safetensors
+#迪士尼风格
+Disney_Style.safetensors
+#并非半现实主义
+Niji_semi-realism_flux.safetensors
+像素风_日系_抖音热门风格_v1.0.safetensors
+#MTLCT 创意排版 | Lâm Panda
+创意排版.safetensors
+#塔罗牌风格
+tarot-8-funnycaptionshort.safetensors
+#表情符号风格 
+EmoticonFlux.safetensors
+垃圾摇滚.safetensors
+X梵高油画风格Van Gogh style-flux-lora-000006.safetensors
 
 
 

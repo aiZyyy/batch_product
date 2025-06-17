@@ -173,8 +173,10 @@ def process_images(config, api):
             sanitized_lora = sanitize_filename(lora_name.split('.')[0])
             seed1 = random.randint(*config.seed_range)
             workflow["50"]["inputs"]["seed"] = seed1
+            print(f"种子1为: {seed1}")
             seed2 = random.randint(*config.seed_range)
             workflow["109"]["inputs"]["seed"] = seed2
+            print(f"种子2为: {seed2}")
             # 更新工作流节点
             # 节点288: 图片路径
             workflow["288"]["inputs"]["paths"] = str(img_path.resolve())
