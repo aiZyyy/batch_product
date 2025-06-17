@@ -426,7 +426,7 @@
   },
   "289": {
     "inputs": {
-      "String": "Print design, pattern design,",
+      "String": "Print design, pattern design,The main body of the picture has a distinct outline",
       "speak_and_recognation": {
         "__value__": [
           false,
