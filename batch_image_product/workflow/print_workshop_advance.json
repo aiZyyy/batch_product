@@ -17,7 +17,7 @@
   },
   "50": {
     "inputs": {
-      "seed": 641549302532034,
+      "seed": 465956888326542,
       "steps": 25,
       "cfg": 1,
       "sampler_name": "euler",
@@ -51,7 +51,7 @@
       "load_local_model": true,
       "background_color_name": "transparency",
       "device": "auto",
-      "local_model_path": "",
+      "local_model_path": "D:/ai/ComfyUI-aki-v1.6/ComfyUI/models/BiRefNet",
       "image": [
         "8",
         0
@@ -70,8 +70,8 @@
         0
       ],
       "string2": [
-        "305",
-        0
+        "109",
+        2
       ]
     },
     "class_type": "JoinStrings",
@@ -82,7 +82,7 @@
   "103": {
     "inputs": {
       "text": [
-        "135",
+        "92",
         0
       ],
       "speak_and_recognation": {
@@ -168,7 +168,7 @@
       "num_beams": 3,
       "do_sample": true,
       "output_mask_select": "",
-      "seed": 1093738824305137,
+      "seed": 362098501576601,
       "speak_and_recognation": {
         "__value__": [
           false,
@@ -236,19 +236,6 @@
     "class_type": "SaveImage",
     "_meta": {
       "title": "保存图像"
-    }
-  },
-  "135": {
-    "inputs": {
-      "text_0": "Print design, pattern design, The image is a digital illustration of a skull wearing a red baseball cap with a gold dollar sign on it. The skull is holding a stack of money in its right hand and appears to be deep in thought. The background is black, making the skull and the money stand out. The overall style of the illustration is cartoon-like and the colors are bright and vibrant.",
-      "text": [
-        "92",
-        0
-      ]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "展示文本"
     }
   },
   "139": {
@@ -463,21 +450,6 @@
       "title": "字符串"
     }
   },
-  "292": {
-    "inputs": {
-      "String": "In the middle, \"happy\" is written in white capital letters, and there is a white heartbeats line, which is a symbol of the game's heartbeat.",
-      "speak_and_recognation": {
-        "__value__": [
-          false,
-          true
-        ]
-      }
-    },
-    "class_type": "String",
-    "_meta": {
-      "title": "字符串"
-    }
-  },
   "293": {
     "inputs": {
       "lora_name": "HyperdetailedRealismMJ7Flux.safetensors",
@@ -494,7 +466,7 @@
   },
   "294": {
     "inputs": {
-      "batch_size": 4,
+      "batch_size": 2,
       "latent": [
         "108",
         0
@@ -528,24 +500,6 @@
     "class_type": "ImageUpscaleWithModel",
     "_meta": {
       "title": "图像通过模型放大"
-    }
-  },
-  "305": {
-    "inputs": {
-      "select": 1,
-      "sel_mode": false,
-      "input1": [
-        "109",
-        2
-      ],
-      "input2": [
-        "292",
-        0
-      ]
-    },
-    "class_type": "ImpactSwitch",
-    "_meta": {
-      "title": "切换"
     }
   }
 }
