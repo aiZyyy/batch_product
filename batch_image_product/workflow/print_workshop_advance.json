@@ -51,7 +51,7 @@
       "load_local_model": true,
       "background_color_name": "transparency",
       "device": "auto",
-      "local_model_path": "D:\\ai\\ComfyUI-aki-v1.6\\ComfyUI\\models\\BiRefNet",
+      "local_model_path": "",
       "image": [
         "8",
         0
@@ -213,7 +213,7 @@
       "scale_to_length": 1080,
       "background_color": "#000000",
       "image": [
-        "288",
+        "302",
         0
       ]
     },
@@ -503,6 +503,31 @@
     "class_type": "CR Latent Batch Size",
     "_meta": {
       "title": "Latent批次大小"
+    }
+  },
+  "301": {
+    "inputs": {
+      "model_name": "ESRGAN_4x.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "放大模型加载器"
+    }
+  },
+  "302": {
+    "inputs": {
+      "upscale_model": [
+        "301",
+        0
+      ],
+      "image": [
+        "288",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "图像通过模型放大"
     }
   },
   "305": {

@@ -2,7 +2,7 @@
 """
 图像批量生成工具 - 增强版
 功能：
-1. 根据图片分辨率动态选择工作流模板
+1. 根据图片分辨率动态修改工作流
 2. 遍历指定文件夹中的所有图片
 3. 自动替换工作流中的关键参数
 4. 随机选择LORA模型
@@ -31,8 +31,11 @@ class AppConfig:
         # 路径配置
         self.image_folder = Path(self.raw['image_folder'])  # 图片文件夹路径
         self.lora_names = self.raw['lora_names']  # LORA模型名称列表
-        self.workflow_highres = Path("workflow/" + self.raw['workflow_highres'])  # 高分辨率工作流
-        self.workflow_lowres = Path("workflow/" + self.raw['workflow_lowres'])  # 低分辨率工作流
+        # 现在只使用一个工作流文件
+        self.workflow_file = Path("workflow/" + self.raw['workflow'])
+        self.BiRefNet_url = self.raw['BiRefNet_url']
+        self.flux_Guide = self.raw['flux_Guide']
+        self.style_num = self.raw['style_num']
 
         self.max_retries = self.raw['max_retries']
         self.request_timeout = self.raw['request_timeout']
@@ -138,16 +141,13 @@ def process_images(config, api):
 
     print(f"找到 {len(image_files)} 张图片，开始处理...")
 
-    # 预先加载两个工作流模板
-    with open(config.workflow_highres, 'r', encoding='utf-8') as f:
-        workflow_highres = json.load(f)
-
-    with open(config.workflow_lowres, 'r', encoding='utf-8') as f:
-        workflow_lowres = json.load(f)
+    # 预先加载工作流模板
+    with open(config.workflow_file, 'r', encoding='utf-8') as f:
+        base_workflow = json.load(f)
 
     for img_path in image_files:
         try:
-            # 获取图片尺寸并选择工作流
+            # 获取图片尺寸
             dimensions = get_image_dimensions(img_path)
             if not dimensions:
                 print(f"跳过无法获取尺寸的图片: {img_path.name}")
@@ -156,13 +156,24 @@ def process_images(config, api):
             width, height = dimensions
             print(f"图片: {img_path.name} | 分辨率: {width}x{height}")
 
-            # 根据分辨率选择工作流
+            # 深拷贝工作流，以便修改
+            workflow = json.loads(json.dumps(base_workflow))
+
+            # 根据分辨率动态修改工作流
             if width > 1000 or height > 1000:
-                print("  使用高分辨率工作流")
-                workflow = json.loads(json.dumps(workflow_highres))  # 深拷贝
+                print("  高分辨率图片，移除放大节点")
+
+                # 移除放大节点
+                if "301" in workflow:
+                    del workflow["301"]
+                if "302" in workflow:
+                    del workflow["302"]
+
+                # 直接连接原始图片到缩放节点
+                if "127" in workflow:
+                    workflow["127"]["inputs"]["image"] = ["288", 0]
             else:
-                print("  使用低分辨率工作流")
-                workflow = json.loads(json.dumps(workflow_lowres))  # 深拷贝
+                print("  低分辨率图片，保留放大节点")
 
             # 获取图片基本信息
             img_name = img_path.stem
@@ -182,6 +193,10 @@ def process_images(config, api):
             workflow["288"]["inputs"]["paths"] = str(img_path.resolve())
 
             workflow["294"]["inputs"]["batch_size"] = config.batch_size
+
+            workflow["290"]["inputs"]["value"] = config.style_num
+            workflow["106"]["inputs"]["guidance"] = config.flux_Guide
+            workflow["76"]["inputs"]["local_model_path"] = config.BiRefNet_url
 
             # 节点293: LORA名称
             workflow["293"]["inputs"]["lora_name"] = lora_name

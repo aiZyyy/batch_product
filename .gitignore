@@ -173,8 +173,6 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-
-inputs/
 outputs/
 
 logs/
@@ -183,3 +181,5 @@ logs/
 ~$input.xlsx
 /batch_video_product/output/processed/
 /batch_image_product/resource/generation_log.csv
+/batch_voice_product/inputs/
+/batch_video_product/inputs/
