@@ -20,16 +20,18 @@ from pathlib import Path
 from urllib import request, error
 
 import yaml
+import argparse
 
 
 class AppConfig:
-    def __init__(self, config_path):
+    def __init__(self, config_path, image_folder=None):
         """初始化并加载配置文件"""
         with open(config_path, 'r', encoding='utf-8') as f:
             self.raw = yaml.safe_load(f)  # 加载YAML配置
 
         # 路径配置
-        self.image_folder = Path(self.raw['image_folder'])  # 图片文件夹路径
+        # 修改：优先使用命令行传入的image_folder
+        self.image_folder = Path(image_folder) if image_folder else Path(self.raw['image_folder'])
         self.lora_names = self.raw['lora_names']  # LORA模型名称列表
         # 现在只使用一个工作流文件
         self.workflow_file = Path("workflow/" + self.raw['workflow'])
@@ -128,12 +130,15 @@ def get_image_dimensions(image_path):
 
 
 def process_images(config, api):
-    """处理所有图片并发送到ComfyUI"""
-    # 获取所有图片文件
-    image_files = [
-        f for f in config.image_folder.iterdir()
-        if f.is_file() and f.suffix.lower() in ['.png', '.jpg', '.jpeg', '.webp']
-    ]
+    """处理所有图片并发送到ComfyUI，保留目录结构"""
+    # 获取所有图片文件（递归子文件夹）
+    image_files = []
+    for ext in ['.png', '.jpg', '.jpeg', '.webp']:
+        image_files.extend(config.image_folder.rglob(f'*{ext}'))
+        image_files.extend(config.image_folder.rglob(f'*{ext.upper()}'))  # 处理大写后缀
+
+    # 去重并确保只保留文件
+    image_files = [f for f in set(image_files) if f.is_file()]
 
     if not image_files:
         print(f"在 {config.image_folder} 中没有找到图片文件")
@@ -154,7 +159,9 @@ def process_images(config, api):
                 continue
 
             width, height = dimensions
-            print(f"图片: {img_path.name} | 分辨率: {width}x{height}")
+            # 获取相对于根目录的路径
+            relative_path = img_path.relative_to(config.image_folder)
+            print(f"图片: {relative_path} | 分辨率: {width}x{height}")
 
             # 深拷贝工作流，以便修改
             workflow = json.loads(json.dumps(base_workflow))
@@ -188,12 +195,12 @@ def process_images(config, api):
             seed2 = random.randint(*config.seed_range)
             workflow["109"]["inputs"]["seed"] = seed2
             print(f"种子2为: {seed2}")
+
             # 更新工作流节点
             # 节点288: 图片路径
             workflow["288"]["inputs"]["paths"] = str(img_path.resolve())
 
             workflow["294"]["inputs"]["batch_size"] = config.batch_size
-
             workflow["290"]["inputs"]["value"] = config.style_num
             workflow["106"]["inputs"]["guidance"] = config.flux_Guide
             workflow["76"]["inputs"]["local_model_path"] = config.BiRefNet_url
@@ -204,27 +211,39 @@ def process_images(config, api):
             # 节点291: 当前日期
             workflow["291"]["inputs"]["String"] = config.people + "_" + config.date_folder
 
-            # 节点214: 原图路径
-            workflow["214"]["inputs"]["String"] = f"原图/{sanitized_lora}/{sanitized_name}"
+            # 获取相对目录路径（保持文件夹结构）
+            relative_dir = relative_path.parent
+            # 节点214: 原图路径（保留文件夹结构）
+            output_path_214 = f"原图/{relative_dir}/{sanitized_lora}_{sanitized_name}".replace('\\', '/')
+            workflow["214"]["inputs"]["String"] = output_path_214
 
-            # 节点216: 透明底路径
-            workflow["216"]["inputs"]["String"] = f"透明/{sanitized_lora}/{sanitized_name}"
+            # 节点216: 透明底路径（保留文件夹结构）
+            output_path_216 = f"透明/{relative_dir}/{sanitized_lora}_{sanitized_name}".replace('\\', '/')
+            workflow["216"]["inputs"]["String"] = output_path_216
+
+            print(f"  输出路径: {output_path_214}")
+            print(f"  透明路径: {output_path_216}")
 
             # 发送处理请求
             if api.send_prompt(workflow):
-                print(f"  成功发送: {img_path.name} | LORA: {lora_name}")
+                print(f"  成功发送: {relative_path} | LORA: {lora_name}")
             else:
-                print(f"  处理失败: {img_path.name}")
+                print(f"  处理失败: {relative_path}")
 
         except Exception as e:
-            print(f"处理图片 {img_path.name} 时出错: {str(e)}")
+            print(f"处理图片 {img_path} 时出错: {str(e)}")
 
 
 def main():
     """主函数"""
     try:
+        # 新增：命令行参数解析
+        parser = argparse.ArgumentParser(description='图像批量生成工具')
+        parser.add_argument('--image_folder', type=str, help='覆盖配置中的图片文件夹路径')
+        args = parser.parse_args()
+
         # 初始化配置和API
-        config = AppConfig("resource/print_workshop_advance.yaml")
+        config = AppConfig("resource/print_workshop_advance.yaml", image_folder=args.image_folder)
         api = ComfyAPI(config)
 
         # 处理所有图片
