@@ -1,8 +1,8 @@
 # 所属人
-people: "李进"
+people: "ayu测试"
 # 图片文件夹路径
-image_folder: "G:/Desktop"
-batch_size: 4              # 每批数量
+image_folder: "D:/ai/ComfyUI-aki-v1.6/ComfyUI/output/temu自动裁剪"
+batch_size: 2              # 每批数量
 BiRefNet_url: "D:/ai/ComfyUI-aki-v1.6/ComfyUI/models/BiRefNet"
 flux_Guide: 3.5
 style_num: 4.5

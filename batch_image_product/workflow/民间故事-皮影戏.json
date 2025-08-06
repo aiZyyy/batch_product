@@ -1,0 +1,244 @@
+{
+  "1": {
+    "inputs": {
+      "text": "piyingxi,Chinese traditional mythological immortal paintings,a 65-year-old man,white short hair,brown eyes,wearing a gray cloth robe,a 30-year-old man,black short hair,black eyes,wearing a green silk robe,a 28-year-old man,black short hair,black eyes,wearing a brown brocade coat,a 25-year-old man,black long hair tied in a bun,brown eyes,wearing an old thick cotton coat,a 29-year-old woman,black long hair tied in a bun,black eyes,wearing a green silk dress,a 27-year-old woman,black long hair tied in a bun,black eyes,wearing a pink embroidered dress,a 24-year-old woman,black long hair braided,brown eyes,wearing a blue blouse,a family in a farmhouse courtyard,sitting in the yard,with different expressions,the eldest son and second son look clever,the third son has a simple expression,the old man sits in the middle,everyone is wearing simple clothes,background is a rural house,daytime,sunny,wide angle lens,full body,",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      },
+      "clip": [
+        "45",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码器"
+    }
+  },
+  "2": {
+    "inputs": {
+      "samples": [
+        "47",
+        0
+      ],
+      "vae": [
+        "17",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "8": {
+    "inputs": {
+      "guidance": 3.5,
+      "conditioning": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "Flux引导"
+    }
+  },
+  "9": {
+    "inputs": {
+      "width": 576,
+      "height": 1088,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "空Latent_SD3"
+    }
+  },
+  "11": {
+    "inputs": {
+      "max_shift": 1.1500000000000001,
+      "base_shift": 0.5000000000000001,
+      "width": 576,
+      "height": 1024,
+      "model": [
+        "50",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingFlux",
+    "_meta": {
+      "title": "模型采样算法Flux"
+    }
+  },
+  "17": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "VAE加载器"
+    }
+  },
+  "40": {
+    "inputs": {
+      "upscale_model": [
+        "42",
+        0
+      ],
+      "image": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "图像通过模型放大"
+    }
+  },
+  "42": {
+    "inputs": {
+      "model_name": "RealESRGAN_x4plus_anime_6B.pth"
+    },
+    "class_type": "Upscale Model Loader",
+    "_meta": {
+      "title": "放大模型加载器"
+    }
+  },
+  "43": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "40",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "保存图像"
+    }
+  },
+  "44": {
+    "inputs": {
+      "model_path": "svdq-int4-flux.1-dev",
+      "cache_threshold": 0.12000000000000002,
+      "attention": "nunchaku-fp16",
+      "cpu_offload": "auto",
+      "device_id": 0,
+      "data_type": "float16",
+      "i2f_mode": "always"
+    },
+    "class_type": "NunchakuFluxDiTLoader",
+    "_meta": {
+      "title": "Nunchaku FLUX DiT Loader"
+    }
+  },
+  "45": {
+    "inputs": {
+      "model_type": "flux",
+      "text_encoder1": "t5xxl_fp16.safetensors",
+      "text_encoder2": "clip_l.safetensors",
+      "t5_min_length": 512,
+      "use_4bit_t5": "disable",
+      "int4_model": "none"
+    },
+    "class_type": "NunchakuTextEncoderLoader",
+    "_meta": {
+      "title": "Nunchaku Text Encoder Loader (Deprecated)"
+    }
+  },
+  "46": {
+    "inputs": {
+      "lora_name": "民间故事\\传统古风绘画风格_传统古风绘画风格v1.0.safetensors",
+      "lora_strength": 0.8000000000000002,
+      "model": [
+        "44",
+        0
+      ]
+    },
+    "class_type": "NunchakuFluxLoraLoader",
+    "_meta": {
+      "title": "Nunchaku FLUX.1 LoRA Loader"
+    }
+  },
+  "47": {
+    "inputs": {
+      "seed": 3857022511,
+      "steps": 35,
+      "cfg": 2,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "11",
+        0
+      ],
+      "positive": [
+        "8",
+        0
+      ],
+      "negative": [
+        "48",
+        0
+      ],
+      "latent_image": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "K采样器"
+    }
+  },
+  "48": {
+    "inputs": {
+      "text": "",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      },
+      "clip": [
+        "45",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码器"
+    }
+  },
+  "49": {
+    "inputs": {
+      "lora_name": "民间故事\\非遗_FLUX皮影快跑_v1.0.safetensors",
+      "lora_strength": 0.8000000000000002,
+      "model": [
+        "46",
+        0
+      ]
+    },
+    "class_type": "NunchakuFluxLoraLoader",
+    "_meta": {
+      "title": "Nunchaku FLUX.1 LoRA Loader"
+    }
+  },
+  "50": {
+    "inputs": {
+      "lora_name": "以前的flux模型\\中国画.safetensors",
+      "lora_strength": 0.7500000000000001,
+      "model": [
+        "49",
+        0
+      ]
+    },
+    "class_type": "NunchakuFluxLoraLoader",
+    "_meta": {
+      "title": "Nunchaku FLUX.1 LoRA Loader"
+    }
+  }
+}

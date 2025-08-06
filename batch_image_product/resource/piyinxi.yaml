@@ -1,0 +1,21 @@
+# 工作流路径
+workflow_path: "民间故事-皮影戏.json"
+
+# 提示词文件路径
+prompt_file: "1.txt"
+
+# 统一文件名前缀
+filename_prefix: "皮影戏"
+
+# 日志目录
+log_dir: "logs/"
+
+# 图像参数
+width: 576
+height: 1088
+batch_size: 1
+max_filename_length: 50
+
+# 网络设置
+max_retries: 5
+request_timeout: 30
