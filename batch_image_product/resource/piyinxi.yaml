@@ -5,7 +5,7 @@ workflow_path: "民间故事-皮影戏.json"
 prompt_file: "1.txt"
 
 # 统一文件名前缀
-filename_prefix: "皮影戏"
+filename_prefix: "民间故事/皮影戏_"
 
 # 日志目录
 log_dir: "logs/"

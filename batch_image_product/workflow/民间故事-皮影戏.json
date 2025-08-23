@@ -1,7 +1,7 @@
 {
   "1": {
     "inputs": {
-      "text": "piyingxi,Chinese traditional mythological immortal paintings,a 65-year-old man,white short hair,brown eyes,wearing a gray cloth robe,a 30-year-old man,black short hair,black eyes,wearing a green silk robe,a 28-year-old man,black short hair,black eyes,wearing a brown brocade coat,a 25-year-old man,black long hair tied in a bun,brown eyes,wearing an old thick cotton coat,a 29-year-old woman,black long hair tied in a bun,black eyes,wearing a green silk dress,a 27-year-old woman,black long hair tied in a bun,black eyes,wearing a pink embroidered dress,a 24-year-old woman,black long hair braided,brown eyes,wearing a blue blouse,a family in a farmhouse courtyard,sitting in the yard,with different expressions,the eldest son and second son look clever,the third son has a simple expression,the old man sits in the middle,everyone is wearing simple clothes,background is a rural house,daytime,sunny,wide angle lens,full body,",
+      "text": "piyingxi,Chinese traditional mythological immortal paintings,A 25-year-old man, with long black hair tied up in a bun and brown eyes, is wearing a tattered thick cotton-padded jacket. A 65-year-old man, with short grizzled hair and brown eyes, is dressed in a grey cloth robe. A 30-year-old man, with short black hair and black eyes, is wearing a long blue silk gown. A 28-year-old man, with short black hair and black eyes, A 29-year-old woman, dressed in a brown brocade coat, with her long black hair coiled up in a bun and black eyes, is wearing a green silk skirt. A 27-year-old woman, with her long black hair combed into a bun and black eyes, is wearing a pink embroidered jacket and skirt. A 24-year-old woman, with her long black hair braided and brown eyes, is wearing a blue cloth shirt. The third brother has a simple and honest expression, smiling and looking dazed. The old man handed three pieces of silver to his three sons one by one. The sons stood in front of him, with the silver in their hands. The background was the entrance of a main farmhouse. During the day, it was a frontal view, with seven parts of the body",
       "speak_and_recognation": {
         "__value__": [
           false,
@@ -126,7 +126,7 @@
       "model_path": "svdq-int4-flux.1-dev",
       "cache_threshold": 0.12000000000000002,
       "attention": "nunchaku-fp16",
-      "cpu_offload": "auto",
+      "cpu_offload": "enable",
       "device_id": 0,
       "data_type": "float16",
       "i2f_mode": "always"
@@ -161,7 +161,7 @@
     },
     "class_type": "NunchakuFluxLoraLoader",
     "_meta": {
-      "title": "Nunchaku FLUX.1 LoRA Loader"
+      "title": "Nunchaku FLUX LoRA Loader"
     }
   },
   "47": {
@@ -224,7 +224,7 @@
     },
     "class_type": "NunchakuFluxLoraLoader",
     "_meta": {
-      "title": "Nunchaku FLUX.1 LoRA Loader"
+      "title": "Nunchaku FLUX LoRA Loader"
     }
   },
   "50": {
@@ -238,7 +238,7 @@
     },
     "class_type": "NunchakuFluxLoraLoader",
     "_meta": {
-      "title": "Nunchaku FLUX.1 LoRA Loader"
+      "title": "Nunchaku FLUX LoRA Loader"
     }
   }
 }
