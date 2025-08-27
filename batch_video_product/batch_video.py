@@ -1,12 +1,13 @@
-from gradio_client import Client, handle_file
 import os
 from pathlib import Path
+
+from gradio_client import Client, handle_file
 
 # 初始化客户端（注意检查端口是否匹配）
 client = Client("http://localhost/")
 
 
-def generate_video(text_z, width, height, img_path):
+def generate_video(text_z, width, height, length, img_path):
     """
     视频生成函数
     :param text_z: 文本提示
@@ -24,7 +25,7 @@ def generate_video(text_z, width, height, img_path):
             text_z=text_z,
             width=width,
             height=height,
-            length=2,
+            length=length,
             img=img,
             step=3,
             img2=None,
@@ -42,9 +43,12 @@ def generate_video(text_z, width, height, img_path):
         return None
 
 
-def process_folder(folder_path, text_z="", width=261, height=464):
+# 522 928
+# 576 1024
+def process_folder(folder_path, length=6, text_z="", width=576, height=1024):
     """
     处理文件夹中的所有PNG图片
+    :param length:
     :param folder_path: 文件夹路径
     :param text_z: 文本提示（可选）
     :param width: 视频宽度（可选）
@@ -73,6 +77,7 @@ def process_folder(folder_path, text_z="", width=261, height=464):
             text_z=text_z,
             width=width,
             height=height,
+            length=length,
             img_path=str(img_path)
         )
 
@@ -85,8 +90,8 @@ def process_folder(folder_path, text_z="", width=261, height=464):
 # 使用示例 ---------------------------------------------------
 if __name__ == "__main__":
     # 示例1：处理整个文件夹
-    folder_url = "G:/your_folder_path"  # 替换为你的文件夹路径
-    process_folder(folder_url, text_z="你的文本提示")
+    folder_url = "G:/ai素材/故事视频/1.未做完/image/upscayl_png_upscayl-lite-4x_1x"  # 替换为你的文件夹路径
+    process_folder(folder_url, length=6)
 
     # 示例2：处理单个图片
     # output_video = generate_video(
