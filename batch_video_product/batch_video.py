@@ -90,7 +90,8 @@ def process_folder(folder_path, length=6, text_z="", width=576, height=1024):
 # 使用示例 ---------------------------------------------------
 if __name__ == "__main__":
     # 示例1：处理整个文件夹
-    folder_url = "G:/ai素材/故事视频/1.未做完/video/upscayl_png_digital-art-4x_3x"  # 替换为你的文件夹路径
+    # folder_url = "G:/ai素材/故事视频/1.未做完/video/upscayl_png_digital-art-4x_3x"  # 替换为你的文件夹路径
+    folder_url = "G:/ai素材/故事视频/1.未做完/video/upscayl_png_upscayl-standard-4x_3x"  # 替换为你的文件夹路径
     # folder_url = "G:/ai素材/故事视频/1.未做完/置顶视频/image/upscayl_png_digital-art-4x_2x"  # 替换为你的文件夹路径
     process_folder(folder_url, length=6)
 
