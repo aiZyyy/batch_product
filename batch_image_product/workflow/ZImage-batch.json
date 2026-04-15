@@ -1,0 +1,286 @@
+{
+  "3": {
+    "inputs": {
+      "value": "震撼特写，满屏服务器内存条堆积如山，金色接口在暗景中刺眼发光，黑色背景高对比，强烈戏剧性光源，商业插画风格，高质量渲染。画面中一只超迷你珊瑚橙章鱼，体型小巧仅占画面四分之一，戴着绣白色\"IT.ZY\"字样的绿色棒球帽，黑色头戴式耳机，金框飞行员墨镜；左触须戴金色指针手表，右触须握深灰色手机，触须僵住微翘，精致可爱。\n\n工厂车间冷蓝色工业光源，巨幅屏幕上阿里巴巴和字节跳动Logo高亮发光，屏幕周围黑色阴影，商业插画风格，高质量渲染。画面中一只超迷你珊瑚橙章鱼，体型小巧仅占画面四分之一，戴着绣白色\"IT.ZY\"字样的绿色棒球帽，黑色头戴式耳机，金框飞行员墨镜；左触须戴金色指针手表，右触须握深灰色手机，触须微微上翘，精致可爱。\n\n数据中心蓝色荧光灯带照亮服务器机架，蓝色冷光从底部向上蔓延，商业插画风格，高质量渲染。画面中一只超迷你珊瑚橙章鱼，体型小巧仅占画面四分之一，戴着绣白色\"IT.ZY\"字样的绿色棒球帽，黑色头戴式耳机，金框飞行员墨镜；左触须戴金色指针手表，右触须握深灰色手机，竖大拇指，友善微笑，精致可爱。"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "字符串（多行）"
+    }
+  },
+  "4": {
+    "inputs": {
+      "input_string": [
+        "3",
+        0
+      ],
+      "option": "去空行"
+    },
+    "class_type": "ProcessString",
+    "_meta": {
+      "title": "常规处理字符🐠meeeyo.com"
+    }
+  },
+  "5": {
+    "inputs": {
+      "prompt": [
+        "4",
+        0
+      ],
+      "start_index": 0,
+      "max_rows": 1000,
+      "remove_empty_lines": true
+    },
+    "class_type": "easy promptLine",
+    "_meta": {
+      "title": "提示词行"
+    }
+  },
+  "8": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "1:49",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "保存图像"
+    }
+  },
+  "1:13": {
+    "inputs": {
+      "width": [
+        "1:29",
+        0
+      ],
+      "height": [
+        "1:29",
+        1
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "空Latent图像（SD3）"
+    }
+  },
+  "1:7": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "1:52",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码"
+    }
+  },
+  "1:34": {
+    "inputs": {
+      "text": "1152",
+      "INT": [
+        "1:29",
+        0
+      ]
+    },
+    "class_type": "Bjornulf_ShowInt",
+    "_meta": {
+      "title": "👁 Show (Int)"
+    }
+  },
+  "1:35": {
+    "inputs": {
+      "text": "864",
+      "INT": [
+        "1:29",
+        1
+      ]
+    },
+    "class_type": "Bjornulf_ShowInt",
+    "_meta": {
+      "title": "👁 Show (Int)"
+    }
+  },
+  "1:40": {
+    "inputs": {
+      "reserved": 0.6,
+      "mode": "auto",
+      "seed": 655416364046201,
+      "auto_max_reserved": 0,
+      "clean_gpu_before": true,
+      "anything": [
+        "1:36",
+        0
+      ]
+    },
+    "class_type": "ReservedVRAMSetter",
+    "_meta": {
+      "title": "Set Reserved VRAM(GB) ⚙️"
+    }
+  },
+  "1:17": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "加载VAE"
+    }
+  },
+  "1:36": {
+    "inputs": {
+      "unet_name": "z_image\\z-image-turbo-fp8-e4m3fn.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "UNet加载器"
+    }
+  },
+  "1:29": {
+    "inputs": {
+      "megapixel": "1.0",
+      "aspect_ratio": "4:3 (Classic Landscape)",
+      "divisible_by": "16",
+      "custom_ratio": false,
+      "custom_aspect_ratio": "1:1"
+    },
+    "class_type": "FluxResolutionNode",
+    "_meta": {
+      "title": "Flux Resolution Calc"
+    }
+  },
+  "1:39": {
+    "inputs": {
+      "mode": "RAM_PRESSURE (Auto Purge)",
+      "cleanup_threshold": 2,
+      "any_input": [
+        "1:40",
+        0
+      ]
+    },
+    "class_type": "DynamicRAMCacheControl",
+    "_meta": {
+      "title": "🔥 Dynamic RAM Cache Control"
+    }
+  },
+  "1:47": {
+    "inputs": {
+      "offload_model": true,
+      "offload_cache": true,
+      "anything": [
+        "1:48",
+        0
+      ]
+    },
+    "class_type": "VRAMCleanup",
+    "_meta": {
+      "title": "🎈VRAM-Cleanup"
+    }
+  },
+  "1:48": {
+    "inputs": {
+      "samples": [
+        "1:51",
+        0
+      ],
+      "vae": [
+        "1:17",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "1:49": {
+    "inputs": {
+      "delay": 2,
+      "any": [
+        "1:50",
+        0
+      ]
+    },
+    "class_type": "easy sleep",
+    "_meta": {
+      "title": "延迟执行"
+    }
+  },
+  "1:50": {
+    "inputs": {
+      "clean_file_cache": true,
+      "clean_processes": true,
+      "clean_dlls": true,
+      "retry_times": 3,
+      "anything": [
+        "1:47",
+        0
+      ]
+    },
+    "class_type": "RAMCleanup",
+    "_meta": {
+      "title": "🎈RAM-Cleanup"
+    }
+  },
+  "1:51": {
+    "inputs": {
+      "seed": 146944228460964,
+      "steps": 9,
+      "cfg": 1,
+      "sampler_name": "er_sde",
+      "scheduler": "sgm_uniform",
+      "denoise": 1,
+      "model": [
+        "1:39",
+        0
+      ],
+      "positive": [
+        "1:6",
+        0
+      ],
+      "negative": [
+        "1:7",
+        0
+      ],
+      "latent_image": [
+        "1:13",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "K采样器"
+    }
+  },
+  "1:6": {
+    "inputs": {
+      "text": [
+        "5",
+        0
+      ],
+      "clip": [
+        "1:52",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码"
+    }
+  },
+  "1:52": {
+    "inputs": {
+      "clip_name": "Qwen\\Qwen3-4b-Z-Image-Engineer-V4-Q6_K.gguf",
+      "type": "lumina2"
+    },
+    "class_type": "CLIPLoaderGGUF",
+    "_meta": {
+      "title": "CLIPLoader (GGUF)"
+    }
+  }
+}
