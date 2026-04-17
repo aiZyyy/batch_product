@@ -1,0 +1,173 @@
+{
+  "6": {
+    "inputs": {
+      "lufs": -18,
+      "audio": [
+        "20",
+        0
+      ]
+    },
+    "class_type": "NormalizeAudioLoudness",
+    "_meta": {
+      "title": "Normalize Audio Loudness"
+    }
+  },
+  "9": {
+    "inputs": {
+      "prompt": ""
+    },
+    "class_type": "CR Prompt Text",
+    "_meta": {
+      "title": "⚙️ CR Prompt Text"
+    }
+  },
+  "10": {
+    "inputs": {
+      "audio": "涨粉配音-男_钱追属狗人，踩了_094016.wav",
+      "audioUI": "/api/view?filename=%E6%B6%A8%E7%B2%89%E9%85%8D%E9%9F%B3-%E7%94%B7_%E9%92%B1%E8%BF%BD%E5%B1%9E%E7%8B%97%E4%BA%BA%EF%BC%8C%E8%B8%A9%E4%BA%86_094016.wav&type=input&subfolder=&rand=0.11713378658398321"
+    },
+    "class_type": "LoadAudio",
+    "_meta": {
+      "title": "加载音频"
+    }
+  },
+  "11": {
+    "inputs": {
+      "filename_prefix": "YZ-LongCat TTS",
+      "quality": "320k",
+      "audioUI": "/api/view?filename=YZ-LongCat%20TTS_00001_.mp3&type=output&subfolder=&rand=0.5443233300286143",
+      "audio": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "SaveAudioMP3",
+    "_meta": {
+      "title": "保存音频 (MP3)"
+    }
+  },
+  "12": {
+    "inputs": {
+      "model_path": "LongCat-AudioDiT-3.5B-bf16",
+      "text": [
+        "9",
+        0
+      ],
+      "prompt_text": [
+        "21",
+        0
+      ],
+      "steps": 16,
+      "guidance_strength": 4,
+      "guidance_method": "apg",
+      "device": "auto",
+      "dtype": "auto",
+      "attention": "sage_attention",
+      "seed": 1386098735,
+      "keep_model_loaded": true,
+      "prompt_audio": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "LongCatVoiceCloneTTS",
+    "_meta": {
+      "title": "LongCat AudioDiT Voice Clone TTS"
+    }
+  },
+  "19": {
+    "inputs": {
+      "audioUI": "/api/view?filename=ComfyUI_temp_nudpt_00001_.flac&type=temp&subfolder=&rand=0.018455848774479477",
+      "audio": [
+        "20",
+        0
+      ]
+    },
+    "class_type": "PreviewAudio",
+    "_meta": {
+      "title": "预览音频"
+    }
+  },
+  "20": {
+    "inputs": {
+      "start_time": "0:05",
+      "end_time": "0:15",
+      "audio": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "AudioCrop",
+    "_meta": {
+      "title": "AudioCrop"
+    }
+  },
+  "21": {
+    "inputs": {
+      "language": "Auto",
+      "model": [
+        "22",
+        0
+      ],
+      "audio": [
+        "20",
+        0
+      ]
+    },
+    "class_type": "Qwen3ASRTranscribe",
+    "_meta": {
+      "title": "Qwen3-ASR Transcribe"
+    }
+  },
+  "22": {
+    "inputs": {
+      "model_name": "Qwen3-ASR-1.7B"
+    },
+    "class_type": "Qwen3ASRLoader",
+    "_meta": {
+      "title": "Qwen3-ASR Loader"
+    }
+  },
+  "23": {
+    "inputs": {
+      "text": "前追属狗人，踩了狗屎运的属狗人，不想发财就划走，再忙也要听一听。特别是七零年、八二年和九四年的富贵狗，划走你就后悔一辈子。十月二十九号，重阳节过后，一定。",
+      "anything": [
+        "21",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "展示任何"
+    }
+  },
+  "66": {
+    "inputs": {
+      "model": "base",
+      "audio": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "WhisperAudioToSRTText",
+    "_meta": {
+      "title": "🗣️Whisper Audio to Text+SRT"
+    }
+  },
+  "67": {
+    "inputs": {
+      "root_dir": "output",
+      "file": "outputfile1.srt",
+      "append": "append",
+      "insert": true,
+      "text": [
+        "66",
+        1
+      ]
+    },
+    "class_type": "SaveText|pysssss",
+    "_meta": {
+      "title": "Save Text 🐍"
+    }
+  }
+}
