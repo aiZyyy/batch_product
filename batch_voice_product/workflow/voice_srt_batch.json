@@ -64,7 +64,7 @@
       "dtype": "auto",
       "attention": "sage_attention",
       "seed": 1386098735,
-      "keep_model_loaded": true,
+      "keep_model_loaded": false,
       "prompt_audio": [
         "6",
         0
@@ -90,8 +90,8 @@
   },
   "20": {
     "inputs": {
-      "start_time": "0:05",
-      "end_time": "0:15",
+      "start_time": "0:04",
+      "end_time": "0:20",
       "audio": [
         "10",
         0

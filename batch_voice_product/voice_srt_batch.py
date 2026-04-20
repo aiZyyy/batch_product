@@ -2,27 +2,26 @@
 """
 提交语音TTS工作流到ComfyUI
 用法:
-    python voice_tts.py --audio 涨粉配音-男_钱追属狗人，踩了_094016.wav --prompt "你的TTS文本"
+    python run_voice_tts.py --audio 涨粉配音-男_钱追属狗人，踩了_094016.wav --prompt "你的TTS文本"
 可选:
-    --output_time "14-30"  # 自定义时间，默认当前小时-分钟
+    --output_time "2026-04-17-14"  # 自定义时间后缀，默认当前日期-小时
     --workflow voice_srt_batch.json
     --api_url http://127.0.0.1:8188
 """
 
-import argparse
 import json
 import os
 import sys
 import time
-from copy import deepcopy
+import argparse
 from datetime import datetime
 from urllib import request, error
+from copy import deepcopy
 
 DEFAULT_API_URL = "http://127.0.0.1:8188"
 DEFAULT_WORKFLOW = "workflow/voice_srt_batch.json"
 MAX_RETRIES = 3
 REQUEST_TIMEOUT = 120
-
 
 class ComfyAPI:
     def __init__(self, endpoint, max_retries=MAX_RETRIES, timeout=REQUEST_TIMEOUT):
@@ -59,22 +58,21 @@ class ComfyAPI:
             time.sleep(2 ** attempt)
         return False
 
-
 def main():
     parser = argparse.ArgumentParser(description="修改语音TTS工作流并提交到ComfyUI")
     parser.add_argument("--audio", required=True, help="输入音频文件名 (位于ComfyUI input目录下)")
     parser.add_argument("--prompt", required=True, help="TTS生成文本")
-    parser.add_argument("--output_time", help="自定义输出时间后缀，格式 HH-MM (默认当前时间)")
+    parser.add_argument("--output_time", help="自定义时间后缀，格式 YYYY-MM-DD-HH (默认当前日期-小时)")
     parser.add_argument("--workflow", default=DEFAULT_WORKFLOW, help=f"工作流JSON路径 (默认 {DEFAULT_WORKFLOW})")
     parser.add_argument("--api_url", default=DEFAULT_API_URL, help=f"ComfyUI API地址 (默认 {DEFAULT_API_URL})")
     args = parser.parse_args()
 
-    # 确定时间后缀
+    # 确定时间后缀（格式：YYYY-MM-DD-HH）
     if args.output_time:
         time_suffix = args.output_time
     else:
         now = datetime.now()
-        time_suffix = f"{now.hour:02d}-{now.minute:02d}"
+        time_suffix = f"{now.strftime('%Y-%m-%d')}-{now.hour:02d}"
     date_str = datetime.now().strftime("%Y-%m-%d")
 
     # 加载工作流
@@ -126,7 +124,6 @@ def main():
     else:
         print("💥 提交失败，请检查ComfyUI状态。")
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()
