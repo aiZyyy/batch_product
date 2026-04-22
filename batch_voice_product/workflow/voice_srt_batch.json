@@ -64,7 +64,7 @@
       "dtype": "auto",
       "attention": "sage_attention",
       "seed": 1386098735,
-      "keep_model_loaded": false,
+      "keep_model_loaded": true,
       "prompt_audio": [
         "6",
         0

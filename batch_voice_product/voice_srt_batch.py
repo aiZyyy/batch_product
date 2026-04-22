@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 """
-提交语音TTS工作流到ComfyUI
-用法:
-    python run_voice_tts.py --audio 涨粉配音-男_钱追属狗人，踩了_094016.wav --prompt "你的TTS文本"
-可选:
-    --output_time "2026-04-17-14"  # 自定义时间后缀，默认当前日期-小时
-    --workflow voice_srt_batch.json
-    --api_url http://127.0.0.1:8188
+Submit TTS workflow to ComfyUI
+Usage:
+    python voice_srt_batch.py --audio xinzhongzhicheng.WAV --prompt "your text"
 """
 
 import json
@@ -42,32 +38,31 @@ class ComfyAPI:
                 with request.urlopen(req, timeout=self.timeout) as response:
                     if response.status == 200:
                         resp_data = json.loads(response.read().decode('utf-8'))
-                        print(f"✅ 提交成功！prompt_id: {resp_data.get('prompt_id', 'unknown')}")
+                        print(f"[OK] Submit success! prompt_id: {resp_data.get('prompt_id', 'unknown')}")
                         return True
                     else:
-                        print(f"❌ 请求失败，状态码: {response.status}")
+                        print(f"[FAIL] Request failed, status: {response.status}")
             except error.HTTPError as e:
-                print(f"⚠️ HTTP错误 {e.code}: {e.reason}")
+                print(f"[WARN] HTTP error {e.code}: {e.reason}")
                 try:
                     detail = e.read().decode('utf-8')
-                    print(f"   详情: {detail[:200]}")
+                    print(f"   Detail: {detail[:200]}")
                 except:
                     pass
             except error.URLError as e:
-                print(f"⚠️ 网络错误: {str(e)}")
+                print(f"[WARN] Network error: {str(e)}")
             time.sleep(2 ** attempt)
         return False
 
 def main():
-    parser = argparse.ArgumentParser(description="修改语音TTS工作流并提交到ComfyUI")
-    parser.add_argument("--audio", required=True, help="输入音频文件名 (位于ComfyUI input目录下)")
-    parser.add_argument("--prompt", required=True, help="TTS生成文本")
-    parser.add_argument("--output_time", help="自定义时间后缀，格式 YYYY-MM-DD-HH (默认当前日期-小时)")
-    parser.add_argument("--workflow", default=DEFAULT_WORKFLOW, help=f"工作流JSON路径 (默认 {DEFAULT_WORKFLOW})")
-    parser.add_argument("--api_url", default=DEFAULT_API_URL, help=f"ComfyUI API地址 (默认 {DEFAULT_API_URL})")
+    parser = argparse.ArgumentParser(description="Submit TTS workflow to ComfyUI")
+    parser.add_argument("--audio", required=True, help="Audio filename (in ComfyUI input)")
+    parser.add_argument("--prompt", required=True, help="TTS text")
+    parser.add_argument("--output_time", help="Custom time suffix YYYY-MM-DD-HH")
+    parser.add_argument("--workflow", default=DEFAULT_WORKFLOW, help=f"Workflow JSON path")
+    parser.add_argument("--api_url", default=DEFAULT_API_URL, help=f"ComfyUI API URL")
     args = parser.parse_args()
 
-    # 确定时间后缀（格式：YYYY-MM-DD-HH）
     if args.output_time:
         time_suffix = args.output_time
     else:
@@ -75,54 +70,48 @@ def main():
         time_suffix = f"{now.strftime('%Y-%m-%d')}-{now.hour:02d}"
     date_str = datetime.now().strftime("%Y-%m-%d")
 
-    # 加载工作流
     if not os.path.exists(args.workflow):
-        print(f"❌ 工作流文件不存在: {args.workflow}")
+        print(f"[FAIL] Workflow file not found: {args.workflow}")
         sys.exit(1)
     with open(args.workflow, 'r', encoding='utf-8') as f:
         template = json.load(f)
 
     workflow = deepcopy(template)
 
-    # 修改节点10 (LoadAudio)
     if "10" not in workflow:
-        print("❌ 工作流中缺少节点10 (LoadAudio)")
+        print("[FAIL] Node 10 (LoadAudio) missing in workflow")
         sys.exit(1)
     workflow["10"]["inputs"]["audio"] = args.audio
-    print(f"🎵 输入音频: {args.audio}")
+    print(f"[AUDIO] Input: {args.audio}")
 
-    # 修改节点9 (CR Prompt Text)
     if "9" not in workflow:
-        print("❌ 工作流中缺少节点9 (CR Prompt Text)")
+        print("[FAIL] Node 9 (CR Prompt Text) missing in workflow")
         sys.exit(1)
     workflow["9"]["inputs"]["prompt"] = args.prompt
-    print(f"📝 TTS文本: {args.prompt[:50]}...")
+    print(f"[PROMPT] TTS: {args.prompt[:50]}...")
 
-    # 修改节点11 (SaveAudioMP3) 的 filename_prefix
     if "11" not in workflow:
-        print("❌ 工作流中缺少节点11 (SaveAudioMP3)")
+        print("[FAIL] Node 11 (SaveAudioMP3) missing")
         sys.exit(1)
     audio_prefix = f"AI/{date_str}/voice/{time_suffix}_"
     workflow["11"]["inputs"]["filename_prefix"] = audio_prefix
-    print(f"🎧 音频输出前缀: {audio_prefix}")
+    print(f"[AUDIO] Output prefix: {audio_prefix}")
 
-    # 修改节点67 (SaveText) 的 file
     if "67" not in workflow:
-        print("❌ 工作流中缺少节点67 (SaveText)")
+        print("[FAIL] Node 67 (SaveText) missing")
         sys.exit(1)
     srt_filename = f"AI/{date_str}/srt/{time_suffix}.srt"
     workflow["67"]["inputs"]["file"] = srt_filename
-    print(f"📄 SRT输出文件: {srt_filename}")
+    print(f"[SRT] Output file: {srt_filename}")
 
-    # 提交
     api = ComfyAPI(args.api_url)
-    print(f"\n🚀 提交工作流到 {args.api_url} ...")
+    print(f"\n[SUBMIT] Submitting to {args.api_url} ...")
     success = api.send_prompt(workflow)
 
     if success:
-        print("🎉 工作流已提交，请查看ComfyUI输出。")
+        print("[DONE] Workflow submitted, check ComfyUI output.")
     else:
-        print("💥 提交失败，请检查ComfyUI状态。")
+        print("[FAIL] Submit failed, check ComfyUI status.")
         sys.exit(1)
 
 if __name__ == "__main__":
