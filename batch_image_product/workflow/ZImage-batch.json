@@ -89,7 +89,7 @@
     },
     "class_type": "Bjornulf_ShowInt",
     "_meta": {
-      "title": "👁 Show (Int)"
+      "title": "[EYE] Show (Int)"
     }
   },
   "1:35": {
@@ -102,7 +102,7 @@
     },
     "class_type": "Bjornulf_ShowInt",
     "_meta": {
-      "title": "👁 Show (Int)"
+      "title": "[EYE] Show (Int)"
     }
   },
   "1:40": {
@@ -165,7 +165,7 @@
     },
     "class_type": "DynamicRAMCacheControl",
     "_meta": {
-      "title": "🔥 Dynamic RAM Cache Control"
+      "title": "[FIRE] Dynamic RAM Cache Control"
     }
   },
   "1:47": {
