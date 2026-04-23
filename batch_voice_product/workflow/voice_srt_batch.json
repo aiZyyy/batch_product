@@ -18,12 +18,12 @@
     },
     "class_type": "CR Prompt Text",
     "_meta": {
-      "title": "⚙️ CR Prompt Text"
+      "title": "CR Prompt Text"
     }
   },
   "10": {
     "inputs": {
-      "audio": "涨粉配音-男_钱追属狗人，踩了_094016.wav",
+      "audio": "A.wav",
       "audioUI": "/api/view?filename=%E6%B6%A8%E7%B2%89%E9%85%8D%E9%9F%B3-%E7%94%B7_%E9%92%B1%E8%BF%BD%E5%B1%9E%E7%8B%97%E4%BA%BA%EF%BC%8C%E8%B8%A9%E4%BA%86_094016.wav&type=input&subfolder=&rand=0.11713378658398321"
     },
     "class_type": "LoadAudio",
@@ -64,7 +64,7 @@
       "dtype": "auto",
       "attention": "sage_attention",
       "seed": 1386098735,
-      "keep_model_loaded": true,
+      "keep_model_loaded": false,
       "prompt_audio": [
         "6",
         0
@@ -91,7 +91,7 @@
   "20": {
     "inputs": {
       "start_time": "0:04",
-      "end_time": "0:20",
+      "end_time": "0:18",
       "audio": [
         "10",
         0
@@ -151,7 +151,7 @@
     },
     "class_type": "WhisperAudioToSRTText",
     "_meta": {
-      "title": "🗣️Whisper Audio to Text+SRT"
+      "title": "Whisper Audio to Text+SRT"
     }
   },
   "67": {
@@ -167,7 +167,7 @@
     },
     "class_type": "SaveText|pysssss",
     "_meta": {
-      "title": "Save Text 🐍"
+      "title": "Save Text"
     }
   }
 }
