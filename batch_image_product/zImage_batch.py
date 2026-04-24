@@ -1,12 +1,12 @@
+import argparse
 import json
 import os
+import random
 import sys
 import time
-import shutil
-import random
+from copy import deepcopy
 from datetime import datetime
 from urllib import request, error
-from copy import deepcopy
 
 COMFY_API_URL = "http://127.0.0.1:8188/prompt"
 WORKFLOW_PATH = "workflow/ZImage-batch.json"
@@ -14,6 +14,7 @@ MAX_RETRIES = 3
 REQUEST_TIMEOUT = 120
 COMFYUI_OUTPUT_DIR = r"D:\ai\ComfyUI-WorkFisher-V2\ComfyUI\output"
 AUTO_MOVE_FILES = True
+
 
 class ComfyAPI:
     def __init__(self, endpoint, max_retries, timeout):
@@ -39,7 +40,9 @@ class ComfyAPI:
                 time.sleep(2 ** attempt)
         return False
 
+
 def main():
+    parser = argparse.ArgumentParser()
     parser.add_argument("--batch-id", required=True, help="批次/选题ID（如A1/B3），用于输出子目录隔离")
     parser.add_argument("prompt_file", help="提示词文本文件路径")
 
@@ -77,7 +80,7 @@ def main():
 
     seed_node_id = "1:51"
     if seed_node_id in workflow and "inputs" in workflow[seed_node_id]:
-        new_seed = random.randint(1, 2**32 - 1)
+        new_seed = random.randint(1, 2 ** 32 - 1)
         workflow[seed_node_id]["inputs"]["seed"] = new_seed
         print(f"[OK] Random seed: {new_seed}")
 
@@ -89,6 +92,7 @@ def main():
         print("[DONE] Workflow submitted.")
     else:
         print("[FAIL] Submit failed, check ComfyUI status.")
+
 
 if __name__ == "__main__":
     main()

@@ -6,18 +6,22 @@
     python run_wan2.2.py --start_img jt__00008_.png --end_img jt__00009_.png --duration 5 --prompt "你的提示词"
 """
 
+import argparse
+import io
 import json
 import os
 import sys
 import time
-import argparse
+from copy import deepcopy
 from datetime import datetime
 from urllib import request, error
-from copy import deepcopy
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 # ---------------------------- 默认配置 ---------------------------------
 DEFAULT_API_URL = "http://127.0.0.1:8188"
-DEFAULT_WORKFLOW = "workflow/wan2.2-batch.json"   # 工作流文件路径（相对于脚本或绝对路径）
+DEFAULT_WORKFLOW = "workflow/wan2.2-batch.json"  # 工作流文件路径（相对于脚本或绝对路径）
 MAX_RETRIES = 3
 REQUEST_TIMEOUT = 120
 
@@ -42,19 +46,19 @@ class ComfyAPI:
                 with request.urlopen(req, timeout=self.timeout) as response:
                     if response.status == 200:
                         resp_data = json.loads(response.read().decode('utf-8'))
-                        print(f"✅ 提交成功！prompt_id: {resp_data.get('prompt_id', 'unknown')}")
+                        print(f"提交成功！prompt_id: {resp_data.get('prompt_id', 'unknown')}")
                         return True
                     else:
-                        print(f"❌ 请求失败，状态码: {response.status}")
+                        print(f"请求失败，状态码: {response.status}")
             except error.HTTPError as e:
-                print(f"⚠️ HTTP错误 {e.code}: {e.reason}")
+                print(f"HTTP错误 {e.code}: {e.reason}")
                 try:
                     detail = e.read().decode('utf-8')
-                    print(f"   详情: {detail[:200]}")
+                    print(f"详情: {detail[:200]}")
                 except:
                     pass
             except error.URLError as e:
-                print(f"⚠️ 网络错误: {str(e)}")
+                print(f"网络错误: {str(e)}")
             time.sleep(2 ** attempt)
         return False
 
@@ -83,7 +87,7 @@ def main():
 
     # 1. 加载工作流模板
     if not os.path.exists(args.workflow):
-        print(f"❌ 工作流文件不存在: {args.workflow}")
+        print(f"工作流文件不存在: {args.workflow}")
         sys.exit(1)
     with open(args.workflow, 'r', encoding='utf-8') as f:
         template = json.load(f)
@@ -102,35 +106,35 @@ def main():
 
     # 修改节点224 (起始帧)
     if "224" not in workflow:
-        print("❌ 工作流中缺少节点224 (LoadImage)")
+        print("工作流中缺少节点224 (LoadImage)")
         sys.exit(1)
     workflow["224"]["inputs"]["image"] = start_img
-    print(f"📷 起始帧: {start_img}")
+    print(f"起始帧: {start_img}")
 
     # 修改节点243 (结束帧)
     if "243" not in workflow:
-        print("❌ 工作流中缺少节点243 (LoadImage)")
+        print("工作流中缺少节点243 (LoadImage)")
         sys.exit(1)
     workflow["243"]["inputs"]["image"] = end_img
-    print(f"📷 结束帧: {end_img}")
+    print(f"结束帧: {end_img}")
 
     # 修改节点316 (视频秒数)
     if "316" not in workflow:
-        print("❌ 工作流中缺少节点316 (Int)")
+        print("工作流中缺少节点316 (Int)")
         sys.exit(1)
     workflow["316"]["inputs"]["Number"] = args.duration
     print(f"⏱️ 视频时长: {args.duration} 秒")
 
     # 修改节点227 (正向提示词)
     if "227" not in workflow:
-        print("❌ 工作流中缺少节点227 (CLIPTextEncode)")
+        print("工作流中缺少节点227 (CLIPTextEncode)")
         sys.exit(1)
     workflow["227"]["inputs"]["text"] = args.prompt
-    print(f"📝 提示词: {args.prompt[:80]}...")
+    print(f"提示词: {args.prompt[:80]}...")
 
     # 修改节点237的输出文件名前缀: AI/日期/video/起始图片文件名
     if "237" not in workflow:
-        print("❌ 工作流中缺少节点237 (VideoCombine)")
+        print("工作流中缺少节点237 (VideoCombine)")
         sys.exit(1)
 
     # 提取起始图片文件名（不含扩展名）
@@ -141,17 +145,17 @@ def main():
     else:
         video_prefix = f"AI/{date_str}/video/{start_basename}"
     workflow["237"]["inputs"]["filename_prefix"] = video_prefix
-    print(f"🎬 输出视频前缀: {video_prefix}")
+    print(f"输出视频前缀: {video_prefix}")
 
     # 3. 提交到 ComfyUI
     api = ComfyAPI(args.api_url)
-    print(f"\n🚀 提交工作流到 {args.api_url} ...")
+    print(f"\n提交工作流到 {args.api_url} ...")
     success = api.send_prompt(workflow)
 
     if success:
-        print("🎉 工作流已提交，请查看 ComfyUI 输出。")
+        print("工作流已提交，请查看 ComfyUI 输出。")
     else:
-        print("💥 提交失败，请检查 ComfyUI 是否正常运行且工作流无缺失节点。")
+        print("提交失败，请检查 ComfyUI 是否正常运行且工作流无缺失节点。")
         sys.exit(1)
 
 
