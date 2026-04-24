@@ -60,12 +60,23 @@ class ComfyAPI:
 
 
 # ---------------------------- 主程序 ---------------------------------
+def find_image_in_subdir(batch_id, filename, base_dir):
+    """在 AI/{date}/image/{batch_id}/ 下查找图片，返回完整路径或原文件名（让ComfyUI自己找）"""
+    date_str = datetime.now().strftime("%Y-%m-%d")
+    subdir = os.path.join(base_dir, f"AI/{date_str}/image/{batch_id}")
+    candidate = os.path.join(subdir, filename)
+    if os.path.exists(candidate):
+        return candidate
+    return filename  # 找不到就返回原名，让ComfyUI按默认逻辑找
+
+
 def main():
     parser = argparse.ArgumentParser(description="修改 Wan2.2 工作流并提交到 ComfyUI")
     parser.add_argument("--start_img", required=True, help="起始帧图片文件名 (如 jt__00008_.png)")
     parser.add_argument("--end_img", required=True, help="结束帧图片文件名 (如 jt__00009_.png)")
     parser.add_argument("--duration", type=int, required=True, help="视频长度 (秒)")
     parser.add_argument("--prompt", required=True, help="正向提示词文本")
+    parser.add_argument("--batch-id", default="", help="批次/选题ID（如A1），用于定位图片子目录")
     parser.add_argument("--workflow", default=DEFAULT_WORKFLOW, help=f"工作流 JSON 文件路径 (默认 {DEFAULT_WORKFLOW})")
     parser.add_argument("--api_url", default=DEFAULT_API_URL, help=f"ComfyUI API 地址 (默认 {DEFAULT_API_URL})")
     args = parser.parse_args()
@@ -80,19 +91,28 @@ def main():
     # 2. 深拷贝并修改节点
     workflow = deepcopy(template)
 
+    # 图片路径处理：按 batch_id 定位到子目录
+    if args.batch_id:
+        base_dir = r"D:\ai\ComfyUI-WorkFisher-V2\ComfyUI\output"
+        start_img = find_image_in_subdir(args.batch_id, args.start_img, base_dir)
+        end_img = find_image_in_subdir(args.batch_id, args.end_img, base_dir)
+    else:
+        start_img = args.start_img
+        end_img = args.end_img
+
     # 修改节点224 (起始帧)
     if "224" not in workflow:
         print("❌ 工作流中缺少节点224 (LoadImage)")
         sys.exit(1)
-    workflow["224"]["inputs"]["image"] = args.start_img
-    print(f"📷 起始帧: {args.start_img}")
+    workflow["224"]["inputs"]["image"] = start_img
+    print(f"📷 起始帧: {start_img}")
 
     # 修改节点243 (结束帧)
     if "243" not in workflow:
         print("❌ 工作流中缺少节点243 (LoadImage)")
         sys.exit(1)
-    workflow["243"]["inputs"]["image"] = args.end_img
-    print(f"📷 结束帧: {args.end_img}")
+    workflow["243"]["inputs"]["image"] = end_img
+    print(f"📷 结束帧: {end_img}")
 
     # 修改节点316 (视频秒数)
     if "316" not in workflow:
@@ -116,7 +136,10 @@ def main():
     # 提取起始图片文件名（不含扩展名）
     start_basename = os.path.splitext(os.path.basename(args.start_img))[0]
     date_str = datetime.now().strftime("%Y-%m-%d")
-    video_prefix = f"AI/{date_str}/video/{start_basename}"
+    if args.batch_id:
+        video_prefix = f"AI/{date_str}/video/{args.batch_id}/{start_basename}"
+    else:
+        video_prefix = f"AI/{date_str}/video/{start_basename}"
     workflow["237"]["inputs"]["filename_prefix"] = video_prefix
     print(f"🎬 输出视频前缀: {video_prefix}")
 

@@ -12,7 +12,6 @@ COMFY_API_URL = "http://127.0.0.1:8188/prompt"
 WORKFLOW_PATH = "workflow/ZImage-batch.json"
 MAX_RETRIES = 3
 REQUEST_TIMEOUT = 120
-TARGET_OUTPUT_ROOT = r"F:\AI"
 COMFYUI_OUTPUT_DIR = r"D:\ai\ComfyUI-WorkFisher-V2\ComfyUI\output"
 AUTO_MOVE_FILES = True
 
@@ -41,11 +40,12 @@ class ComfyAPI:
         return False
 
 def main():
-    if len(sys.argv) < 2:
-        print("[FAIL] Usage: python zImage_batch.py <prompt_text_file>")
-        sys.exit(1)
+    parser.add_argument("--batch-id", required=True, help="批次/选题ID（如A1/B3），用于输出子目录隔离")
+    parser.add_argument("prompt_file", help="提示词文本文件路径")
 
-    txt_path = sys.argv[1]
+    args = parser.parse_args()
+    batch_id = args.batch_id
+    txt_path = args.prompt_file
     if not os.path.exists(txt_path):
         print(f"[FAIL] File not found: {txt_path}")
         sys.exit(1)
@@ -67,12 +67,13 @@ def main():
     workflow["3"]["inputs"]["value"] = prompts_multiline
 
     date_str = datetime.now().strftime("%Y-%m-%d")
-    relative_save_path = f"AI/{date_str}/image/jt_"
+    relative_save_path = f"AI/{date_str}/image/{batch_id}/jt_"
     if "8" not in workflow:
         print("[FAIL] Node 8 (SaveImage) missing in workflow")
         sys.exit(1)
     workflow["8"]["inputs"]["filename_prefix"] = relative_save_path
     print(f"[OK] Output prefix: {relative_save_path}")
+    print(f"[OK] Batch ID: {batch_id}")
 
     seed_node_id = "1:51"
     if seed_node_id in workflow and "inputs" in workflow[seed_node_id]:
