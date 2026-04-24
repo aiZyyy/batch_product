@@ -61,13 +61,13 @@ class ComfyAPI:
 
 # ---------------------------- 主程序 ---------------------------------
 def find_image_in_subdir(batch_id, filename, base_dir):
-    """在 AI/{date}/image/{batch_id}/ 下查找图片，返回完整路径或原文件名（让ComfyUI自己找）"""
+    """在 AI/{date}/{batch_id}/image/ 下查找图片"""
     date_str = datetime.now().strftime("%Y-%m-%d")
-    subdir = os.path.join(base_dir, f"AI/{date_str}/image/{batch_id}")
+    subdir = os.path.join(base_dir, f"AI/{date_str}/{batch_id}/image")
     candidate = os.path.join(subdir, filename)
     if os.path.exists(candidate):
         return candidate
-    return filename  # 找不到就返回原名，让ComfyUI按默认逻辑找
+    return filename
 
 
 def main():
@@ -137,7 +137,7 @@ def main():
     start_basename = os.path.splitext(os.path.basename(args.start_img))[0]
     date_str = datetime.now().strftime("%Y-%m-%d")
     if args.batch_id:
-        video_prefix = f"AI/{date_str}/video/{args.batch_id}/{start_basename}"
+        video_prefix = f"AI/{date_str}/{args.batch_id}/video/{start_basename}"
     else:
         video_prefix = f"AI/{date_str}/video/{start_basename}"
     workflow["237"]["inputs"]["filename_prefix"] = video_prefix

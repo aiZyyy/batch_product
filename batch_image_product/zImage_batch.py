@@ -67,7 +67,7 @@ def main():
     workflow["3"]["inputs"]["value"] = prompts_multiline
 
     date_str = datetime.now().strftime("%Y-%m-%d")
-    relative_save_path = f"AI/{date_str}/image/{batch_id}/jt_"
+    relative_save_path = f"AI/{date_str}/{batch_id}/image/jt_"
     if "8" not in workflow:
         print("[FAIL] Node 8 (SaveImage) missing in workflow")
         sys.exit(1)

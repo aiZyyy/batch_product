@@ -58,6 +58,7 @@ def main():
     parser = argparse.ArgumentParser(description="Submit TTS workflow to ComfyUI")
     parser.add_argument("--audio", required=True, help="Audio filename (in ComfyUI input)")
     parser.add_argument("--prompt", required=True, help="TTS text")
+    parser.add_argument("--batch-id", default="", help="批次/选题ID（如A1），用于输出子目录隔离")
     parser.add_argument("--output_time", help="Custom time suffix YYYY-MM-DD-HH")
     parser.add_argument("--workflow", default=DEFAULT_WORKFLOW, help=f"Workflow JSON path")
     parser.add_argument("--api_url", default=DEFAULT_API_URL, help=f"ComfyUI API URL")
@@ -90,17 +91,19 @@ def main():
     workflow["9"]["inputs"]["prompt"] = args.prompt
     print(f"[PROMPT] TTS: {args.prompt[:50]}...")
 
-    if "11" not in workflow:
-        print("[FAIL] Node 11 (SaveAudioMP3) missing")
-        sys.exit(1)
-    audio_prefix = f"AI/{date_str}/voice/{time_suffix}_"
+    if args.batch_id:
+        audio_prefix = f"AI/{date_str}/{args.batch_id}/voice/{time_suffix}_"
+        srt_filename = f"AI/{date_str}/{args.batch_id}/srt/{time_suffix}.srt"
+    else:
+        audio_prefix = f"AI/{date_str}/voice/{time_suffix}_"
+        srt_filename = f"AI/{date_str}/srt/{time_suffix}.srt"
     workflow["11"]["inputs"]["filename_prefix"] = audio_prefix
     print(f"[AUDIO] Output prefix: {audio_prefix}")
+    print(f"[BATCH_ID] {args.batch_id}")
 
     if "67" not in workflow:
         print("[FAIL] Node 67 (SaveText) missing")
         sys.exit(1)
-    srt_filename = f"AI/{date_str}/srt/{time_suffix}.srt"
     workflow["67"]["inputs"]["file"] = srt_filename
     print(f"[SRT] Output file: {srt_filename}")
 
